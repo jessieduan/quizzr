@@ -24,8 +24,8 @@ db.questions.insert([
 {
     "_id": 2,
     "quiz_id": 1,
-    "question": "What's Melissa's last name?",
-    "solution": "Johnson"
+    "answer_id": "5",
+    "question": "What's Melissa's last name?"
 }]);
 
 
