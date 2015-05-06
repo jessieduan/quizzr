@@ -19779,12 +19779,61 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":30}],158:[function(require,module,exports){
 var React = require('react');
+var EmailComponent = require('./email.jsx');
+var QuestionComponent = require('./question.jsx');
+
+module.exports = React.createClass({displayName: "exports",
+
+   getInitialState : function() {
+    return {
+      component : React.createElement(EmailComponent, null),
+      questionNum : 0
+    };
+    },
+
+advanceQuestion : function() {
+    this.setState ({
+        questionNum : this.state.questionNum + 1
+    });
+},
+
+render: function() {
+    var currentComponent = this.state.questionNum === 0 ?
+        React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}) :
+        React.createElement(QuestionComponent, {questionNum: this.state.questionNum});
+    return (
+        React.createElement("div", null, 
+            currentComponent
+        )
+    );
+}
+});
+
+},{"./email.jsx":159,"./question.jsx":160,"react":157}],159:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+doAlert: function() {
+    alert("hi there!");
+},
+render: function() {
+    return (
+    React.createElement("div", null, 
+        React.createElement("h1", null, "This is another email component again"), 
+        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
+    )
+    )
+}
+});
+
+},{"react":157}],160:[function(require,module,exports){
+var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
 render: function() {
     return (
-    React.createElement("h1", null, "Hello, world from a React.js Component!")
-    )    
+    React.createElement("h1", null, "This is a question component")
+    )
 }
 });
 
