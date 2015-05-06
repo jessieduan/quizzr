@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mongo --eval "load('load.js')"
+mongo --eval "load('./initialdata/load.js')"
