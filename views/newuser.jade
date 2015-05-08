@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 Input Test
-  form#formAddUser(name="adduser",method="post",action="/adduser")
-    input#inputUserName(type="text", placeholder="username", name="username")
-    input#inputUserEmail(type="text", placeholder="useremail", name="useremail")
-    button#btnSubmit(type="submit") submit
+  form.form-horizontal(name="adduser",method="post",action="/adduser")
+    input.span3(id="inputusername", type="text", placeholder="username", name="username")
+    input.span3(id="inputemail", type="text", placeholder="useremail", name="useremail")
+    input.btn(type="submit", value="submit")
