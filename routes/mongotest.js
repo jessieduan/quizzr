@@ -3,6 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     var db = req.db;
+	console.log(db);
     var collection = db.get('users');
     collection.find({},{},function(e,docs) {
         console.log(docs);

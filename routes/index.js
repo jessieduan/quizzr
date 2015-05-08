@@ -3,7 +3,18 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    var db = req.db;
+	console.log(db);
+    var collection = db.get('quizzes');
+    collection.find({},{},function(e,docs) {
+        console.log(docs);
+        console.log(JSON.stringify(docs));
+        res.render('index', {
+			title: 'Express',
+			quizData: JSON.stringify(docs)
+		});
+    });
+  //res.render('index', { title: 'Express' });
 });
 
 router.get('/newuser', function(req, res) {

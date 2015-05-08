@@ -2,8 +2,35 @@
 var React = require('react');
 var HelloWorld = require('./HelloWorld.jsx');
 
+var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML)
+//var quizData = allQuizData[0];
+var quizData = {
+    "quiz_id" : 1,
+    "name": "CS376",
+    "questions" :[{
+        "question_id": 1,
+        "question_str": "Is this a question?",
+        "answers" : [
+            {
+                "answer_id" : 5,
+                "answer" : "Johnson",
+                "control_explanation": "correct",
+                "explanations" : [{
+                }],
+
+
+                "answer_id" : 5,
+                "answer" : "BBBBBBB",
+                "control_explanation": "correct",
+                "explanations" : [{
+                }]
+
+        }]
+    }]
+}
+
 React.render(
-    React.createElement(HelloWorld, null),
+    React.createElement(HelloWorld, {quizData: quizData}),
     document.getElementById('example')
 );
 
@@ -19786,14 +19813,18 @@ module.exports = React.createClass({displayName: "exports",
 
    getInitialState : function() {
     return {
-      questionNum : 0
+      questionNum : 0,
+      currQuestionData : {}
     };
     },
 
 advanceQuestion : function() {
+    //console.log(this.props.)
     this.setState ({
-        questionNum : this.state.questionNum + 1
+        questionNum : this.state.questionNum + 1,
+        currQuestionData : this.props.quizData.questions[this.state.questionNum]
     });
+    console.log(this.state.currQuestionData);
 },
 
 render: function() {
@@ -19801,6 +19832,7 @@ render: function() {
         React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}) :
         React.createElement(QuestionComponent, {
             onNextButtonClicked: this.advanceQuestion, 
+            question: this.state.currQuestionData, 
             questionNum: this.state.questionNum});
     return (
         React.createElement("div", null, 
@@ -19820,8 +19852,9 @@ doAlert: function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-    //SEND EMAIL TO SERVER HERE
-    console.log(this.state.emailAddress);
+    //SEND NAME AND EMAIL TO SERVER HERE
+    console.log("Email address: " + this.state.emailAddress);
+    console.log("Name: " + this.state.userName);
     this.props.onNextButtonClicked()
 },
 
@@ -19864,6 +19897,10 @@ render: function() {
     return (
     React.createElement("div", null, 
         React.createElement("h1", null, "This is question number ", this.props.questionNum, " "), 
+        React.createElement("h2", null, this.props.question["question_str"]), 
+        "for (var answer : this.props.question[\"answers\"]) ", 
+            React.createElement("h1", null, "answer[\"answer\"]"), 
+        
         React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
     )
     )
