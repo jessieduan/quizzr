@@ -3,10 +3,16 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     var db = req.db;
-    var collection = db.get('users');
-    collection.find({},{},function(e,docs) {
-        console.log(docs);
-        res.render('mongotest', { users: docs });
+    db.get('users').find({},{},function(e,userDocs) {
+        console.log(userDocs);
+        db.get('quizzes').find({}, {}, function(e, quizDocs) {
+            console.log(quizDocs);
+            res.render('mongotest', {
+                users: userDocs,
+                quizzes: quizDocs
+            });
+        });
+
     });
 });
 
