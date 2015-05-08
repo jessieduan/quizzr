@@ -6,7 +6,6 @@ module.exports = React.createClass({
 
    getInitialState : function() {
     return {
-      component : <EmailComponent />,
       questionNum : 0
     };
     },
@@ -20,7 +19,9 @@ advanceQuestion : function() {
 render: function() {
     var currentComponent = this.state.questionNum === 0 ?
         <EmailComponent onNextButtonClicked={this.advanceQuestion}/> :
-        <QuestionComponent questionNum={this.state.questionNum} />;
+        <QuestionComponent
+            onNextButtonClicked={this.advanceQuestion}
+            questionNum={this.state.questionNum} />;
     return (
         <div>
             {currentComponent}

@@ -19786,7 +19786,6 @@ module.exports = React.createClass({displayName: "exports",
 
    getInitialState : function() {
     return {
-      component : React.createElement(EmailComponent, null),
       questionNum : 0
     };
     },
@@ -19800,7 +19799,9 @@ advanceQuestion : function() {
 render: function() {
     var currentComponent = this.state.questionNum === 0 ?
         React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}) :
-        React.createElement(QuestionComponent, {questionNum: this.state.questionNum});
+        React.createElement(QuestionComponent, {
+            onNextButtonClicked: this.advanceQuestion, 
+            questionNum: this.state.questionNum});
     return (
         React.createElement("div", null, 
             currentComponent
@@ -19816,11 +19817,40 @@ module.exports = React.createClass({displayName: "exports",
 doAlert: function() {
     alert("hi there!");
 },
+
+formSubmitted : function() {
+    event.preventDefault(event);
+    //SEND EMAIL TO SERVER HERE
+    console.log(this.state.emailAddress);
+    this.props.onNextButtonClicked()
+},
+
+userNameChanged : function(event) {
+ this.setState ({
+       userName  : event.target.value
+    });
+},
+
+emailChanged : function(event) {
+ this.setState ({
+       emailAddress  : event.target.value
+    });
+    //validate email here?
+},
+
 render: function() {
     return (
     React.createElement("div", null, 
         React.createElement("h1", null, "This is another email component again"), 
-        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
+         React.createElement("form", {onSubmit: this.formSubmitted}, 
+            React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
+                //value={this.state.name}
+                onChange: this.userNameChanged, 
+                autoFocus: true}), 
+            React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
+                onChange: this.emailChanged}), 
+        React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
+        )
     )
     )
 }
@@ -19832,7 +19862,10 @@ var React = require('react');
 module.exports = React.createClass({displayName: "exports",
 render: function() {
     return (
-    React.createElement("h1", null, "This is a question component")
+    React.createElement("div", null, 
+        React.createElement("h1", null, "This is question number ", this.props.questionNum, " "), 
+        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
+    )
     )
 }
 });
