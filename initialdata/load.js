@@ -1,5 +1,6 @@
+db = db.getSiblingDB('quizzr');
+
 // quizzes
-db = db.getSiblingDB('quizzes');
 db.quizzes.insert([
 {
     "_id": 1,
@@ -13,7 +14,6 @@ db.quizzes.insert([
 
 
 // questions
-db = db.getSiblingDB('questions');
 db.questions.insert([
 {
     "_id": 1,
@@ -30,7 +30,6 @@ db.questions.insert([
 
 
 // answers
-db = db.getSiblingDB('answers');
 db.answers.insert([
 {
     "_id": 1,
@@ -76,7 +75,6 @@ db.answers.insert([
 
 
 // explanations
-db = db.getSiblingDB('explanations');
 db.explanations.insert([
 {
     "_id": 1,
@@ -134,7 +132,6 @@ db.explanations.insert([
 }]);
 
 // users
-db = db.getSiblingDB('users');
 db.users.insert([
 {
     "_id": 1,
@@ -157,7 +154,6 @@ db.users.insert([
 
 
 // userquizzes
-db = db.getSiblingDB('userquizzes');
 var date1 = new Date(2015, 5, 5);
 var date2 = new Date(2015, 5, 6);
 var date3 = new Date(2015, 5, 7);
@@ -183,7 +179,6 @@ db.userquizzes.insert([
 
 
 // userattempts
-db = db.getSiblingDB('userattempts');
 db.userattempts.insert([
 {
     "_id": 1,
