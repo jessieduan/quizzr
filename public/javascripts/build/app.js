@@ -19820,9 +19820,15 @@ doAlert: function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-    //SEND STUFF TO THE SERVER HERE
+    //SEND EMAIL TO SERVER HERE
     console.log(this.state.emailAddress);
     this.props.onNextButtonClicked()
+},
+
+userNameChanged : function(event) {
+ this.setState ({
+       userName  : event.target.value
+    });
 },
 
 emailChanged : function(event) {
@@ -19837,11 +19843,12 @@ render: function() {
     React.createElement("div", null, 
         React.createElement("h1", null, "This is another email component again"), 
          React.createElement("form", {onSubmit: this.formSubmitted}, 
-            React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
+            React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
                 //value={this.state.name}
-                ref: "email", 
-                onChange: this.emailChanged, 
+                onChange: this.userNameChanged, 
                 autoFocus: true}), 
+            React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
+                onChange: this.emailChanged}), 
         React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
         )
     )
