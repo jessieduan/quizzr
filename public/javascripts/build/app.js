@@ -3,8 +3,8 @@ var React = require('react');
 var HelloWorld = require('./HelloWorld.jsx');
 
 var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML)
-//var quizData = allQuizData[0];
-var quizData = {
+var quizData = allQuizData[0];
+/*var quizData = {
     "quiz_id" : 1,
     "name": "CS376",
     "questions" :[{
@@ -27,7 +27,7 @@ var quizData = {
 
         }]
     }]
-}
+}*/
 
 React.render(
     React.createElement(HelloWorld, {quizData: quizData}),
@@ -19893,14 +19893,23 @@ render: function() {
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
+
+getAnswers : function() {
+    var listItems = [];
+    var answers = this.props.question["answers"];
+    for (var i = 0; i < answers.length; i++) {
+        var newAnswer = (React.createElement("h1", null, answers[i]["answer"]));
+        listItems.push(newAnswer);
+    }
+    return listItems;
+},
+
 render: function() {
     return (
     React.createElement("div", null, 
         React.createElement("h1", null, "This is question number ", this.props.questionNum, " "), 
         React.createElement("h2", null, this.props.question["question_str"]), 
-        "for (var answer : this.props.question[\"answers\"]) ", 
-            React.createElement("h1", null, "answer[\"answer\"]"), 
-        
+        this.getAnswers(), 
         React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
     )
     )
