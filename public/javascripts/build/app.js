@@ -19820,8 +19820,9 @@ doAlert: function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-    //SEND EMAIL TO SERVER HERE
-    console.log(this.state.emailAddress);
+    //SEND NAME AND EMAIL TO SERVER HERE
+    console.log("Email address: " + this.state.emailAddress);
+    console.log("Name: " + this.state.userName);
     this.props.onNextButtonClicked()
 },
 
