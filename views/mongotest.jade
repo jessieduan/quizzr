@@ -1,8 +1,12 @@
-//extends layout
+extends layout
 
 block content
-  p Users
+  h1 Users
   ul
     each user in users
         li= user.name
-  #example
+
+  h1 Quizzes
+  ul
+    each quiz in quizzes
+        li= quiz.name

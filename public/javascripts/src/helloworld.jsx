@@ -1,29 +1,58 @@
 var React = require('react');
 var EmailComponent = require('./email.jsx');
 var QuestionComponent = require('./question.jsx');
+var QuizFinishedComponent = require('./quizFinished.jsx');
+
 
 module.exports = React.createClass({
 
    getInitialState : function() {
     return {
-      component : <EmailComponent />,
-      questionNum : 0
+      questionNum : 0,
+      currQuestionData : {}
     };
     },
 
+getFinishedPage : function() {
+    return (
+        <div>
+            Thanks for completing our quiz!
+        </div>
+    );
+},
+
+onAnswerSelected : function(answer) {
+    alert(answer);
+},
+
+getCurrentComponent : function() {
+    if (this.state.questionNum === 0) {
+        return (<EmailComponent onNextButtonClicked={this.advanceQuestion}/>);
+    } else if (this.state.questionNum > this.props.quizData.questions.length) {
+        return (<QuizFinishedComponent />);
+    } else {
+        console.log(this.props.quizData.questions[this.state.questionNum-1]);
+        return (
+            <QuestionComponent
+            onNextButtonClicked={this.advanceQuestion}
+            onAnswerSelected={this.onAnswerSelected}
+            question={this.props.quizData.questions[this.state.questionNum-1]}
+            questionNum={this.state.questionNum} />);
+    }
+},
+
 advanceQuestion : function() {
+    //console.log(this.props.)
     this.setState ({
-        questionNum : this.state.questionNum + 1
+        questionNum : this.state.questionNum + 1,
     });
 },
 
+
 render: function() {
-    var currentComponent = this.state.questionNum === 0 ?
-        <EmailComponent onNextButtonClicked={this.advanceQuestion}/> :
-        <QuestionComponent questionNum={this.state.questionNum} />;
     return (
         <div>
-            {currentComponent}
+            {this.getCurrentComponent()}
         </div>
     );
 }
