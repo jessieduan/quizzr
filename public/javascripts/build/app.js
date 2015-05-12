@@ -19841,103 +19841,7 @@ render: function() {
 }
 });
 
-},{"./email.jsx":161,"./question.jsx":162,"./quizFinished.jsx":163,"react":157}],159:[function(require,module,exports){
-/**
-* @jsx React.DOM
-*/
-var React = require('react');
-
-var RadioGroup = React.createClass({displayName: "RadioGroup",
-  getInitialState: function() {
-    // check the first block of comment in `setCheckedRadio`
-    return {defaultValue: this.props.defaultValue};
-  },
-
-  componentDidMount: function() {
-    this.setRadioNames();
-    this.setCheckedRadio();
-  },
-
-  componentDidUpdate: function() {
-    this.setRadioNames();
-    this.setCheckedRadio();
-  },
-
-  render: function() {
-    return this.transferPropsTo(
-      React.createElement("div", {onChange: this.props.onChange}, 
-        this.props.children
-      )
-    );
-  },
-
-  setRadioNames: function() {
-    // stay DRY and don't put the same `name` on all radios manually. Put it on
-    // the tag and it'll be done here
-    var $radios = this.getRadios();
-    for (var i = 0, length = $radios.length; i < length; i++) {
-      $radios[i].setAttribute('name', this.props.name);
-    }
-  },
-
-  getRadios: function() {
-    return this.getDOMNode().querySelectorAll('input[type="radio"]');
-  },
-
-  setCheckedRadio: function() {
-    var $radios = this.getRadios();
-    // if `value` is passed from parent, always use that value. This is similar
-    // to React's controlled component. If `defaultValue` is used instead,
-    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
-    // and `value` are both passed, the latter takes precedence, just like in
-    // a controlled component
-    var destinationValue = this.props.value != null
-      ? this.props.value
-      : this.state.defaultValue;
-
-    for (var i = 0, length = $radios.length; i < length; i++) {
-      var $radio = $radios[i];
-
-      // intentionally use implicit conversion for those who accidentally used,
-      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
-      // (auto conversion to valid html value from React)
-      if ($radio.value == destinationValue) {
-        $radio.checked = true;
-      }
-    }
-  },
-
-  getCheckedValue: function() {
-    var $radios = this.getRadios();
-
-    for (var i = 0, length = $radios.length; i < length; i++) {
-      if ($radios[i].checked) {
-        return $radios[i].value;
-      }
-    }
-
-    return null;
-  }
-});
-
-},{"react":157}],160:[function(require,module,exports){
-var React = require('react');
-
-module.exports = React.createClass({displayName: "exports",
-
-render: function() {
-    return (
-    React.createElement("div", null, 
-        React.createElement("input", {type: "radio", name: "answerRadioButton", 
-            value: this.props.answer["answer"], 
-            checked: false}), 
-        React.createElement("label", null, this.props.answer["answer"])
-    )
-    )
-}
-});
-
-},{"react":157}],161:[function(require,module,exports){
+},{"./email.jsx":159,"./question.jsx":160,"./quizFinished.jsx":161,"react":157}],159:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19971,12 +19875,16 @@ render: function() {
     React.createElement("div", null, 
         React.createElement("h1", null, "This is another email component again"), 
          React.createElement("form", {onSubmit: this.formSubmitted}, 
-            React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
+            React.createElement("div", null, 
+                React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
                 //value={this.state.name}
                 onChange: this.userNameChanged, 
-                autoFocus: true}), 
-            React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
-                onChange: this.emailChanged}), 
+                autoFocus: true})
+            ), 
+            React.createElement("div", null, 
+                React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
+                    onChange: this.emailChanged})
+            ), 
         React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
         )
     )
@@ -19984,10 +19892,8 @@ render: function() {
 }
 });
 
-},{"react":157}],162:[function(require,module,exports){
+},{"react":157}],160:[function(require,module,exports){
 var React = require('react');
-var AnswerComponent = require('./answer.jsx');
-var RadioGroup = require('./RadioGroup.jsx');
 
 module.exports = React.createClass({displayName: "exports",
 
@@ -20008,11 +19914,12 @@ module.exports = React.createClass({displayName: "exports",
         //question id
         //answer chosen = answer_id
         //user id
-        alert("selected question")
+        //alert("selected question")
          //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
         var index = event.target.value;
         console.log(index);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
+
     },
 
 getAnswers : function() {
@@ -20021,12 +19928,14 @@ getAnswers : function() {
     var answers = this.props.question["answers"];
     for (var i = 0; i < answers.length; i++) {
         var newAnswer = (
+            React.createElement("div", null, 
             React.createElement("label", null, 
                 React.createElement("input", {type: "radio", 
                  name: "answerButtons", 
                  value: i, 
                  onClick: this.selectAnswer}), 
                     answers[i]["answer"]
+            )
             ));
         listItems.push(newAnswer);
     }
@@ -20038,7 +19947,6 @@ render: function() {
     console.log(this.props.question)
     return (
         React.createElement("div", null, 
-        React.createElement("h1", null, "This is question number ", this.props.questionNum, " "), 
         React.createElement("h2", null, this.props.question["question_str"]), 
         React.createElement("form", {onSubmit: this.formSubmitted}, 
                 React.createElement("div", null, " ", this.getAnswers(), " ")
@@ -20049,7 +19957,7 @@ render: function() {
 }
 });
 
-},{"./RadioGroup.jsx":159,"./answer.jsx":160,"react":157}],163:[function(require,module,exports){
+},{"react":157}],161:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
