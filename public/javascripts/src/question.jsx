@@ -1,6 +1,14 @@
 var React = require('react');
+var ExplanationBoxComponent = require('./explanationBox.jsx');
+
+var explanations = 
+[
+  { "explanation" : "This is an explanation 1"}, 
+  { "explanation" : "This is an explanation 2"}
+];
 
 module.exports = React.createClass({
+
 
     getInitialState : function() {
         return {
@@ -51,13 +59,16 @@ render: function() {
     console.log("received data: ");
     console.log(this.props.question)
     return (
+
         <div>
         <h2>{this.props.question["question_str"]}</h2>
         <form onSubmit={this.formSubmitted}>
                 <div> {this.getAnswers()} </div>
         </form>
         <input type='button' value='next' onClick={this.props.onNextButtonClicked} />
+       	 <ExplanationBoxComponent explanations={explanations} />
         </div>
         )
+
 }
 });
