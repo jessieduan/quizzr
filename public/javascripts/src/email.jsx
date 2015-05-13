@@ -31,12 +31,20 @@ render: function() {
     <div>
         <h1>This is another email component again</h1>
          <form onSubmit={this.formSubmitted}>
-            <input type='text' placeholder='Your name' name='user_name'
-                //value={this.state.name}
-                onChange={this.userNameChanged}
-                autoFocus={true} />
-            <input type='text' placeholder='email' name='email_address'
-                onChange={this.emailChanged}/>
+            <div>
+                <label>
+                    <input type='text' placeholder='Your name' name='user_name'
+                    //value={this.state.name}
+                    onChange={this.userNameChanged}
+                    autoFocus={true} />
+                </label>
+            </div>
+            <div>
+                <label>
+                <input type='text' placeholder='email' name='email_address'
+                    onChange={this.emailChanged}/>
+                </label>
+            </div>
         <input type='submit' value='next' onClick={this.formSubmitted} />
         </form>
     </div>
