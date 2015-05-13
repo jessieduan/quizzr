@@ -3,86 +3,87 @@ db = db.getSiblingDB('quizzr');
 db.quizzes.insert([
 {
     "quiz_id": 1,
-    "name": "CS376",
+    "name": "test",
     "questions": {
         "1": {
-            "question_str": "What year was Stanford founded?",
-            "correct_answer_id": 1,
+            "question_str": "You ran a study examining how much males vs females like a particular website. What test would you use to determine whether males and females like the website equally?",
+            "correct_answer_id": 2,
             "answers": {
                 "1": {
-                    "answer": 1885,
-                    "control_explanation": "Correct! I should only be shown to control users.",
+                    "answer": "Chi-square test",
+                    "control_explanation": "Chi-square tests are used to test one mean of a population. Here, we need to compare multiple means.",
                     "explanations": [
                     {
                         "explanation_id": 1,
-                        "explanation": "I am an explanation for the correct answer, and I should be voted on.",
-                        "upvotes": 2
+                        "explanation": "Chi-square tests are used to test one mean of a population. Here, we need to compare multiple means.",
+                        "upvotes": 5
                     },
                     {
                         "explanation_id": 2,
-                        "explanation": "I am a second explanation for the correct answer, and I should be voted on.",
-                        "upvotes": 5
+                        "explanation": "Chi-squared tests examine how far a value is from 'expected', but can't compare multiple values.",
+                        "upvotes": 2
                     }]
                 },
                 "2": {
-                    "answer_id": 2,
-                    "answer": 1880,
-                    "control_explanation": "Wrong year. I should only be shown to control users.",
+                    "answer": "t-test",
+                    "control_explanation": "This is correct because we are examining two independent groups, males vs females.",
                     "explanations": [{
                         "explanation_id": 1,
-                        "explanation": "No rounding.",
+                        "explanation": "This is correct because we are examining two independent groups, males vs females.",
                         "upvotes": 100
                     },
                     {
                         "explanation_id": 2,
-                        "explanation": "Second explanation for 1880.",
+                        "explanation": "t-tests are always used to compare two groups.",
                         "upvotes": -2
                     }]
                 },
                 "3": {
-                    "answer_id": 3,
-                    "answer": 2015,
-                    "control_explanation": "Too recent. I should only be shown to control users.",
+                    "answer": "Paired t-test",
+                    "control_explanation": "Paired t-tests are used for two means when their respective subjects have some sort of relationship.",
                     "explanations": [{
                         "explanation_id": 1,
-                        "explanation": "You probably saw \'year\' and didn\'t think about the question.",
+                        "explanation": "Paired t-tests are used for two means when their respective subjects have some sort of relationship.",
                         "upvotes": -3
                     }]
                 },
                 "4": {
-                    "answer_id": 4,
-                    "answer": 1900,
-                    "control_explanation": "Also wrong. I am the control explanation.",
-                    "explanations": []
+                    "answer": "ANOVA",
+                    "control_explanation": "ANOVA tests are used if you have more than two means to compare.",
+                    "explanations": [{
+                        "explanation_id": 1,
+                        "explanation": "ANOVA tests are used if you have more than two means to compare.",
+                        "upvotes": 3
+                    }]
                 }
             }
         },
         "2": {
-            "question_str": "What's Melissa's last name?",
-            "correct_answer_id": 1,
+            "question_str": "Post-test questionnaires (conducted after a usability test) are particularly useful for measuring",
+            "correct_answer_id": 4,
             "answers": {
                 "1": {
-                    "answer": "Johnson",
-                    "control_explanation": "Correct! Control explanation.",
+                    "answer": "safety",
+                    "control_explanation": "Safety isn't really relevant.",
                     "explanations": [{
                         "explanation_id": 1,
-                        "explanation": "It's true.",
-                        "upvotes": 10
+                        "explanation": "Safety isn't really relevant.",
+                        "upvotes": 0
                     }]
                 },
                 "2": {
-                    "answer": "Skortcheva",
-                    "control_explanation": "Wrong person. Control explanation.",
+                    "answer": "efficiency",
+                    "control_explanation": "",
                     "explanations": []
                 },
                 "3": {
-                    "answer": "Duan",
-                    "control_explanation": "Wrong person. Control explanation.",
+                    "answer": "learnability",
+                    "control_explanation": "",
                     "explanations": []
                 },
                 "4": {
-                    "answer": "Bernstein",
-                    "control_explanation": "Wrong person. Control explanation.",
+                    "answer": "user satisfaction",
+                    "control_explanation": "",
                     "explanations": []
                 }
             }
