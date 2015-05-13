@@ -8,7 +8,16 @@ module.exports = React.createClass({
         return {
             selectedAnswer : undefined,
             explanations : null,
+            canContinue : false,
+            errorMessage : null,
         };
+    },
+
+    onUpvoteOrExplanationAdded : function() {
+        this.setState({
+            canContinue : true,
+            errorMessage : null,
+        });
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -36,7 +45,9 @@ module.exports = React.createClass({
         console.log(index);
         this.setState ({
             selectedAnswer : index,
-            explanations : <ExplanationBoxComponent explanations={this.props.question["answers"][index]["explanations"]} />
+            explanations : (<ExplanationBoxComponent
+                explanations={this.props.question["answers"][index]["explanations"]}
+                onUpvoteOrExplanationAdded = {this.onUpvoteOrExplanationAdded} />)
         });
         console.log("adding explanations")
         console.log(this.props.question["answers"][index]["explanations"]);
@@ -53,7 +64,7 @@ getAnswers : function() {
             <label>
                 <input type="radio"
                  name="answerButtons"
-                 checked={this.state.selectedQuestion == i}
+                 checked={this.state.selectedAnswer == i}
                  value={i}
                  onClick={this.selectAnswer} />
                     {answers[i]["answer"]}
@@ -62,6 +73,16 @@ getAnswers : function() {
         listItems.push(newAnswer);
     }
     return listItems;
+},
+
+onNextButtonClicked : function() {
+    if (this.state.canContinue) {
+        this.props.onNextButtonClicked();
+        return;
+    }
+    this.setState({
+        errorMessage : "Please add a new explanation or upvote an existing one."
+    });
 },
 
 formSubmitted : function() {
@@ -98,14 +119,14 @@ render: function() {
     console.log("received data: ");
     console.log(this.props.question)
     return (
-
         <div>
         <h2>{this.props.question["question_str"]}</h2>
         <form onSubmit={this.formSubmitted}>
                 <div> {this.getAnswers()} </div>
         </form>
         {this.state.explanations}
-        <input type='button' value='next' onClick={this.props.onNextButtonClicked} />
+        <input type='button' value='next' onClick={this.onNextButtonClicked} />
+        <div>{this.state.errorMessage}</div>
         </div>
         )
 }

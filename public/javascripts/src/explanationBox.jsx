@@ -6,7 +6,8 @@ var HelloWorld = require('./HelloWorld.jsx');
 //Box holding list of explanations
 module.exports = React.createClass({
 
-onTextAreaClicked : function() {
+onTextAreaClicked : function(event) {
+    event.target.value="";
     console.log("text area was clicked");
 },
 
@@ -50,6 +51,7 @@ onExplanationSubmitted : function(event) {
             explanationSubmitted : true
         });
     }
+    this.props.onUpvoteOrExplanationAdded();
 
     // $.get("http://localhost:3000/allQuizData", function(result) {
     //     console.log("in the callback");
@@ -66,7 +68,8 @@ getExplanations : function() {
     for (var i = 0; i < explanations.length; i++) {
         var newAnswer = (
             <div>
-                <ExplanationComponent explanation={explanations[i]} />
+                <ExplanationComponent explanation={explanations[i]}
+                    onVote={this.props.onUpvoteOrExplanationAdded}/>
             </div>);
         listItems.push(newAnswer);
     }
@@ -79,16 +82,19 @@ render: function() {
     var addExplanationBox = (this.state.explanationSubmitted) ? null :
         (<div>
             <textarea
+            className="explanationTextArea"
             ref="explanationTextArea"
             defaultValue="Write an explanation for why the answer you chose is incorrect."
             onClick={this.onTextAreaClicked}
             onChange={this.updateText}/>
-            <input type='button' value='Add Suggestion' onClick={this.onExplanationSubmitted} />
+            <div>
+                <input type='button' value='Add Suggestion' onClick={this.onExplanationSubmitted} />
+            </div>
         </div>);
 
     return (
    <div>
-       	<div className="CommentBox">
+       	<div className="ExplanationBox">
             {this.getExplanations()}
             {addExplanationBox}
         </div>

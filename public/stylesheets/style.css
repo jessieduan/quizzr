@@ -10,3 +10,33 @@ a {
 .answerRadioButton {
 	display: block;
 }
+
+.singleExplanation {
+    display: inline-block;
+    width: 70%;
+}
+
+.explanationText {
+    float: left;
+    width: 70%;
+}
+
+.explanationVoteBox {
+    float: right;
+}
+
+.explanationVoteBox img {
+    height: 15px;
+}
+
+.ExplanationBox {
+    margin-top: 20px;
+}
+
+.upvoteText {
+    text-align: center;
+}
+
+.explanationTextArea {
+    width: 50%;
+}
