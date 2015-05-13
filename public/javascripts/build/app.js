@@ -19857,21 +19857,18 @@ formSubmitted : function(form) {
         useremail: this.state.emailAddress
     };
 
-    console.log('making ajax request');
     $.ajax({
         url: '/adduser',
         dataType: 'json',
         type: 'POST',
         data: newUser,
         success: function(data) {
-            alert('yay!');
             this.props.onNextButtonClicked();
         }.bind(this),
         error: function(xhr, status, err) {
             console.log(err);
         }.bind(this)
     });
-
 },
 
 userNameChanged : function(event) {
@@ -19923,7 +19920,7 @@ module.exports = React.createClass({displayName: "exports",
 render: function() {
     return (
         React.createElement("div", null, 
-            React.createElement("p", null, " ", this.props.explanation["explanation"], " ")
+            React.createElement("p", null, " ", this.props.explanation["explanation"], " ", React.createElement("img", {src: "http://www.ratemyroomie.com/Content/Images/upvoteIcon2.png"}))
         )
     );
 }
@@ -19986,7 +19983,7 @@ module.exports = React.createClass({displayName: "exports",
 
     getInitialState : function() {
         return {
-            selectedQuestion : undefined,
+            selectedAnswer : undefined,
             explanations : null,
         };
     },
@@ -19994,7 +19991,7 @@ module.exports = React.createClass({displayName: "exports",
     componentWillReceiveProps: function(nextProps) {
         if (nextProps.questionNum != this.props.questionNum) {
             this.setState({
-                selectedQuestion : undefined,
+                selectedAnswer : undefined,
                 explanations : null,
             });
         }
@@ -20015,7 +20012,7 @@ module.exports = React.createClass({displayName: "exports",
         var index = event.target.value;
         console.log(index);
         this.setState ({
-            selectedQuestion : index,
+            selectedAnswer : index,
             explanations : React.createElement(ExplanationBoxComponent, {explanations: this.props.question["answers"][index]["explanations"]})
         });
         console.log("adding explanations")
@@ -20041,6 +20038,36 @@ getAnswers : function() {
         listItems.push(newAnswer);
     }
     return listItems;
+},
+
+formSubmitted : function() {
+    event.preventDefault(event);
+
+    // TODO: POPULATE newAttempt
+    var newAttempt = {};
+/*
+    var newAttempt = {
+        useremail: ,
+        quizID: 1,
+        questionID: this.props.questionNum,
+        answerID: this.state.selectedAnswer,
+        explanationWritten: ,
+        explanationVotedFor: ,
+        wasUpvote: ,
+    };
+*/
+    $.ajax({
+        url: '/submitanswer',
+        dataType: 'json',
+        type: 'POST',
+        data: newAttempt,
+        success: function(data) {
+            this.props.onNextButtonClicked();
+        }.bind(this),
+        error: function(xhr, status, err) {
+            console.log(err);
+        }.bind(this)
+    });
 },
 
 render: function() {

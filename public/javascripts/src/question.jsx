@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
     getInitialState : function() {
         return {
-            selectedQuestion : undefined,
+            selectedAnswer : undefined,
             explanations : null,
         };
     },
@@ -14,7 +14,7 @@ module.exports = React.createClass({
     componentWillReceiveProps: function(nextProps) {
         if (nextProps.questionNum != this.props.questionNum) {
             this.setState({
-                selectedQuestion : undefined,
+                selectedAnswer : undefined,
                 explanations : null,
             });
         }
@@ -35,7 +35,7 @@ module.exports = React.createClass({
         var index = event.target.value;
         console.log(index);
         this.setState ({
-            selectedQuestion : index,
+            selectedAnswer : index,
             explanations : <ExplanationBoxComponent explanations={this.props.question["answers"][index]["explanations"]} />
         });
         console.log("adding explanations")
@@ -61,6 +61,36 @@ getAnswers : function() {
         listItems.push(newAnswer);
     }
     return listItems;
+},
+
+formSubmitted : function() {
+    event.preventDefault(event);
+
+    // TODO: POPULATE newAttempt
+    var newAttempt = {};
+/*
+    var newAttempt = {
+        useremail: ,
+        quizID: 1,
+        questionID: this.props.questionNum,
+        answerID: this.state.selectedAnswer,
+        explanationWritten: ,
+        explanationVotedFor: ,
+        wasUpvote: ,
+    };
+*/
+    $.ajax({
+        url: '/submitanswer',
+        dataType: 'json',
+        type: 'POST',
+        data: newAttempt,
+        success: function(data) {
+            this.props.onNextButtonClicked();
+        }.bind(this),
+        error: function(xhr, status, err) {
+            console.log(err);
+        }.bind(this)
+    });
 },
 
 render: function() {
