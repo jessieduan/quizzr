@@ -4,30 +4,6 @@ var HelloWorld = require('./HelloWorld.jsx');
 
 var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML)
 var quizData = allQuizData[0];
-/*var quizData = {
-    "quiz_id" : 1,
-    "name": "CS376",
-    "questions" :[{
-        "question_id": 1,
-        "question_str": "Is this a question?",
-        "answers" : [
-            {
-                "answer_id" : 5,
-                "answer" : "Johnson",
-                "control_explanation": "correct",
-                "explanations" : [{
-                }],
-
-
-                "answer_id" : 5,
-                "answer" : "BBBBBBB",
-                "control_explanation": "correct",
-                "explanations" : [{
-                }]
-
-        }]
-    }]
-}*/
 
 React.render(
     React.createElement(HelloWorld, {quizData: quizData}),
@@ -19808,6 +19784,8 @@ module.exports = require('./lib/React');
 var React = require('react');
 var EmailComponent = require('./email.jsx');
 var QuestionComponent = require('./question.jsx');
+var QuizFinishedComponent = require('./quizFinished.jsx');
+
 
 module.exports = React.createClass({displayName: "exports",
 
@@ -19818,31 +19796,148 @@ module.exports = React.createClass({displayName: "exports",
     };
     },
 
+getFinishedPage : function() {
+    return (
+        React.createElement("div", null, 
+            "Thanks for completing our quiz!"
+        )
+    );
+},
+
+onAnswerSelected : function(answer) {
+    alert(answer);
+},
+
+getCurrentComponent : function() {
+    if (this.state.questionNum === 0) {
+        return (React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}));
+    } else if (this.state.questionNum > this.props.quizData.questions.length) {
+        return (React.createElement(QuizFinishedComponent, null));
+    } else {
+        console.log(this.props.quizData.questions[this.state.questionNum-1]);
+        return (
+            React.createElement(QuestionComponent, {
+            onNextButtonClicked: this.advanceQuestion, 
+            onAnswerSelected: this.onAnswerSelected, 
+            question: this.props.quizData.questions[this.state.questionNum-1], 
+            questionNum: this.state.questionNum}));
+    }
+},
+
 advanceQuestion : function() {
     //console.log(this.props.)
     this.setState ({
         questionNum : this.state.questionNum + 1,
-        currQuestionData : this.props.quizData.questions[this.state.questionNum]
     });
-    console.log(this.state.currQuestionData);
 },
 
+
 render: function() {
-    var currentComponent = this.state.questionNum === 0 ?
-        React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}) :
-        React.createElement(QuestionComponent, {
-            onNextButtonClicked: this.advanceQuestion, 
-            question: this.state.currQuestionData, 
-            questionNum: this.state.questionNum});
     return (
         React.createElement("div", null, 
-            currentComponent
+            this.getCurrentComponent()
         )
     );
 }
 });
 
-},{"./email.jsx":159,"./question.jsx":160,"react":157}],159:[function(require,module,exports){
+},{"./email.jsx":161,"./question.jsx":162,"./quizFinished.jsx":163,"react":157}],159:[function(require,module,exports){
+/**
+* @jsx React.DOM
+*/
+var React = require('react');
+
+var RadioGroup = React.createClass({displayName: "RadioGroup",
+  getInitialState: function() {
+    // check the first block of comment in `setCheckedRadio`
+    return {defaultValue: this.props.defaultValue};
+  },
+
+  componentDidMount: function() {
+    this.setRadioNames();
+    this.setCheckedRadio();
+  },
+
+  componentDidUpdate: function() {
+    this.setRadioNames();
+    this.setCheckedRadio();
+  },
+
+  render: function() {
+    return this.transferPropsTo(
+      React.createElement("div", {onChange: this.props.onChange}, 
+        this.props.children
+      )
+    );
+  },
+
+  setRadioNames: function() {
+    // stay DRY and don't put the same `name` on all radios manually. Put it on
+    // the tag and it'll be done here
+    var $radios = this.getRadios();
+    for (var i = 0, length = $radios.length; i < length; i++) {
+      $radios[i].setAttribute('name', this.props.name);
+    }
+  },
+
+  getRadios: function() {
+    return this.getDOMNode().querySelectorAll('input[type="radio"]');
+  },
+
+  setCheckedRadio: function() {
+    var $radios = this.getRadios();
+    // if `value` is passed from parent, always use that value. This is similar
+    // to React's controlled component. If `defaultValue` is used instead,
+    // subsequent updates to defaultValue are ignored. Note: when `defaultValue`
+    // and `value` are both passed, the latter takes precedence, just like in
+    // a controlled component
+    var destinationValue = this.props.value != null
+      ? this.props.value
+      : this.state.defaultValue;
+
+    for (var i = 0, length = $radios.length; i < length; i++) {
+      var $radio = $radios[i];
+
+      // intentionally use implicit conversion for those who accidentally used,
+      // say, `valueToChange` of 1 (integer) to compare it with `value` of "1"
+      // (auto conversion to valid html value from React)
+      if ($radio.value == destinationValue) {
+        $radio.checked = true;
+      }
+    }
+  },
+
+  getCheckedValue: function() {
+    var $radios = this.getRadios();
+
+    for (var i = 0, length = $radios.length; i < length; i++) {
+      if ($radios[i].checked) {
+        return $radios[i].value;
+      }
+    }
+
+    return null;
+  }
+});
+
+},{"react":157}],160:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+
+render: function() {
+    return (
+    React.createElement("div", null, 
+        React.createElement("input", {type: "radio", name: "answerRadioButton", 
+            value: this.props.answer["answer"], 
+            checked: false}), 
+        React.createElement("label", null, this.props.answer["answer"])
+    )
+    )
+}
+});
+
+},{"react":157}],161:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19889,28 +19984,80 @@ render: function() {
 }
 });
 
-},{"react":157}],160:[function(require,module,exports){
+},{"react":157}],162:[function(require,module,exports){
 var React = require('react');
+var AnswerComponent = require('./answer.jsx');
+var RadioGroup = require('./RadioGroup.jsx');
 
 module.exports = React.createClass({displayName: "exports",
 
+    getInitialState : function() {
+        return {
+            selectedQuestion : undefined,
+        };
+    },
+
+    selectAnswer : function(event) {
+        //console.log(this.props.)
+        /*this.setState ({
+            selectedQuestion : questionNum,
+        });*/
+
+        //alert(questionNum);
+        //quiz id
+        //question id
+        //answer chosen = answer_id
+        //user id
+        alert("selected question")
+         //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
+        var index = event.target.value;
+        console.log(index);
+        this.props.onAnswerSelected(this.props.question["answers"][index]);
+    },
+
 getAnswers : function() {
+//                 value={answers[i]['answer_id']}
     var listItems = [];
     var answers = this.props.question["answers"];
     for (var i = 0; i < answers.length; i++) {
-        var newAnswer = (React.createElement("h1", null, answers[i]["answer"]));
+        var newAnswer = (
+            React.createElement("label", null, 
+                React.createElement("input", {type: "radio", 
+                 name: "answerButtons", 
+                 value: i, 
+                 onClick: this.selectAnswer}), 
+                    answers[i]["answer"]
+            ));
         listItems.push(newAnswer);
     }
     return listItems;
 },
 
 render: function() {
+    console.log("received data: ");
+    console.log(this.props.question)
     return (
-    React.createElement("div", null, 
+        React.createElement("div", null, 
         React.createElement("h1", null, "This is question number ", this.props.questionNum, " "), 
         React.createElement("h2", null, this.props.question["question_str"]), 
-        this.getAnswers(), 
+        React.createElement("form", {onSubmit: this.formSubmitted}, 
+                React.createElement("div", null, " ", this.getAnswers(), " ")
+        ), 
         React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
+        )
+        )
+}
+});
+
+},{"./RadioGroup.jsx":159,"./answer.jsx":160,"react":157}],163:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+
+render: function() {
+    return (
+    React.createElement("div", null, 
+        React.createElement("h1", null, "Thanks for completing this quiz!")
     )
     )
 }
