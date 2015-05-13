@@ -22,7 +22,7 @@ getFinishedPage : function() {
 },
 
 onAnswerSelected : function(answer) {
-    alert(answer);
+    //alert(answer);
 },
 
 getCurrentComponent : function() {

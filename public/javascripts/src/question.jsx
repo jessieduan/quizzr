@@ -1,26 +1,28 @@
 var React = require('react');
 var ExplanationBoxComponent = require('./explanationBox.jsx');
 
-var explanations = 
-[
-  { "explanation" : "This is an explanation 1"}, 
-  { "explanation" : "This is an explanation 2"}
-];
-
 module.exports = React.createClass({
 
 
     getInitialState : function() {
         return {
             selectedQuestion : undefined,
+            explanations : null,
         };
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.questionNum != this.props.questionNum) {
+            this.setState({
+                selectedQuestion : undefined,
+                explanations : null,
+            });
+        }
+    },
+
     selectAnswer : function(event) {
-        //console.log(this.props.)
-        /*this.setState ({
-            selectedQuestion : questionNum,
-        });*/
+        //$iconsole.log(this.props.)
+
 
         //alert(questionNum);
         //quiz id
@@ -29,10 +31,16 @@ module.exports = React.createClass({
         //user id
         //alert("selected question")
          //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
+
         var index = event.target.value;
         console.log(index);
+        this.setState ({
+            selectedQuestion : index,
+            explanations : <ExplanationBoxComponent explanations={this.props.question["answers"][index]["explanations"]} />
+        });
+        console.log("adding explanations")
+        console.log(this.props.question["answers"][index]["explanations"]);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
-
     },
 
 getAnswers : function() {
@@ -66,9 +74,8 @@ render: function() {
                 <div> {this.getAnswers()} </div>
         </form>
         <input type='button' value='next' onClick={this.props.onNextButtonClicked} />
-       	 <ExplanationBoxComponent explanations={explanations} />
+            {this.state.explanations}
         </div>
         )
-
 }
 });

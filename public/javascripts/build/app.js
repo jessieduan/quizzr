@@ -19805,7 +19805,7 @@ getFinishedPage : function() {
 },
 
 onAnswerSelected : function(answer) {
-    alert(answer);
+    //alert(answer);
 },
 
 getCurrentComponent : function() {
@@ -19841,7 +19841,7 @@ render: function() {
 }
 });
 
-},{"./email.jsx":159,"./question.jsx":160,"./quizFinished.jsx":161,"react":157}],159:[function(require,module,exports){
+},{"./email.jsx":159,"./question.jsx":162,"./quizFinished.jsx":163,"react":157}],159:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19876,14 +19876,18 @@ render: function() {
         React.createElement("h1", null, "This is another email component again"), 
          React.createElement("form", {onSubmit: this.formSubmitted}, 
             React.createElement("div", null, 
-                React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
-                //value={this.state.name}
-                onChange: this.userNameChanged, 
-                autoFocus: true})
+                React.createElement("label", null, 
+                    React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
+                    //value={this.state.name}
+                    onChange: this.userNameChanged, 
+                    autoFocus: true})
+                )
             ), 
             React.createElement("div", null, 
+                React.createElement("label", null, 
                 React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
                     onChange: this.emailChanged})
+                )
             ), 
         React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
         )
@@ -19895,19 +19899,93 @@ render: function() {
 },{"react":157}],160:[function(require,module,exports){
 var React = require('react');
 
+//A single explanation/solution for an answer
+
 module.exports = React.createClass({displayName: "exports",
+
+render: function() {
+    return (
+        React.createElement("div", null, 
+            React.createElement("p", null, " ", this.props.explanation["explanation"], " ")
+        )
+    );
+}
+});
+
+
+},{"react":157}],161:[function(require,module,exports){
+var React = require('react');
+var ExplanationComponent = require( './explanation.jsx')
+
+
+//Box holding list of explanations
+module.exports = React.createClass({displayName: "exports",
+
+onTextAreaClicked : function() {
+    console.log("text area was clicked");
+},
+
+onSuggestionSubmitted : function() {
+    console.log("on suggestion submitted")
+},
+
+getExplanations : function() {
+ var listItems = [];
+    var explanations = this.props.explanations;
+    for (var i = 0; i < explanations.length; i++) {
+        var newAnswer = (
+            React.createElement("div", null, 
+                React.createElement(ExplanationComponent, {explanation: explanations[i]})
+            ));
+        listItems.push(newAnswer);
+    }
+    return listItems;
+},
+
+render: function() {
+    console.log("here in explanationBox");
+    return (
+   React.createElement("div", null, 
+       	React.createElement("div", {className: "CommentBox"}, 
+            this.getExplanations(), 
+                React.createElement("textarea", {
+                    defaultValue: "Write an explanation for why the answer you chose is incorrect.", 
+                    onClick: this.onTextAreaClicked}), 
+                React.createElement("input", {type: "button", value: "Add Suggestion", onClick: this.onSuggestionSubmitted})
+        )
+    )
+    );
+  }
+});
+
+
+
+},{"./explanation.jsx":160,"react":157}],162:[function(require,module,exports){
+var React = require('react');
+var ExplanationBoxComponent = require('./explanationBox.jsx');
+
+module.exports = React.createClass({displayName: "exports",
+
 
     getInitialState : function() {
         return {
             selectedQuestion : undefined,
+            explanations : null,
         };
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.questionNum != this.props.questionNum) {
+            this.setState({
+                selectedQuestion : undefined,
+                explanations : null,
+            });
+        }
+    },
+
     selectAnswer : function(event) {
-        //console.log(this.props.)
-        /*this.setState ({
-            selectedQuestion : questionNum,
-        });*/
+        //$iconsole.log(this.props.)
+
 
         //alert(questionNum);
         //quiz id
@@ -19916,10 +19994,16 @@ module.exports = React.createClass({displayName: "exports",
         //user id
         //alert("selected question")
          //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
+
         var index = event.target.value;
         console.log(index);
+        this.setState ({
+            selectedQuestion : index,
+            explanations : React.createElement(ExplanationBoxComponent, {explanations: this.props.question["answers"][index]["explanations"]})
+        });
+        console.log("adding explanations")
+        console.log(this.props.question["answers"][index]["explanations"]);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
-
     },
 
 getAnswers : function() {
@@ -19946,18 +20030,20 @@ render: function() {
     console.log("received data: ");
     console.log(this.props.question)
     return (
+
         React.createElement("div", null, 
         React.createElement("h2", null, this.props.question["question_str"]), 
         React.createElement("form", {onSubmit: this.formSubmitted}, 
                 React.createElement("div", null, " ", this.getAnswers(), " ")
         ), 
-        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
+        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked}), 
+            this.state.explanations
         )
         )
 }
 });
 
-},{"react":157}],161:[function(require,module,exports){
+},{"./explanationBox.jsx":161,"react":157}],163:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
