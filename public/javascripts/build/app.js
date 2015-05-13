@@ -19845,6 +19845,14 @@ render: function() {
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
+getInitialState : function() {
+        return {
+            userName : undefined,
+            emailAddress  : undefined,
+            canContinue : false,
+        };
+    },
+
 doAlert: function() {
     alert("hi there!");
 },
@@ -19859,13 +19867,15 @@ formSubmitted : function() {
 
 userNameChanged : function(event) {
  this.setState ({
-       userName  : event.target.value
+       userName  : event.target.value,
+       canContinue : this.state.emailAddress != undefined
     });
 },
 
 emailChanged : function(event) {
  this.setState ({
-       emailAddress  : event.target.value
+       emailAddress  : event.target.value,
+       canContinue : this.state.userName != undefined
     });
     //validate email here?
 },
@@ -19873,7 +19883,8 @@ emailChanged : function(event) {
 render: function() {
     return (
     React.createElement("div", null, 
-        React.createElement("h1", null, "This is another email component again"), 
+        React.createElement("h1", null, "Welcome to quizzr!"), 
+        "Enter your name and email address to get started with our quiz.", 
          React.createElement("form", {onSubmit: this.formSubmitted}, 
             React.createElement("div", null, 
                 React.createElement("label", null, 
@@ -19889,7 +19900,7 @@ render: function() {
                     onChange: this.emailChanged})
                 )
             ), 
-        React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
+        React.createElement("input", {type: "submit", value: "next", disabled: !this.state.canContinue, onClick: this.formSubmitted})
         )
     )
     )
@@ -19906,16 +19917,22 @@ module.exports = React.createClass({displayName: "exports",
 render: function() {
     return (
         React.createElement("div", null, 
-            React.createElement("p", null, " ", this.props.explanation["explanation"], " ")
+            React.createElement("div", null, this.props.explanation["explanation"], " "), 
+            React.createElement("div", null, 
+                React.createElement("img", {src: "/images/triangle_up"}), 
+                this.props.explanation["upvotes"], 
+                React.createElement("img", {src: "/images/triangle_down"})
+            )
         )
     );
-}
+    }
 });
 
 
 },{"react":157}],161:[function(require,module,exports){
 var React = require('react');
 var ExplanationComponent = require( './explanation.jsx')
+var HelloWorld = require('./HelloWorld.jsx');
 
 
 //Box holding list of explanations
@@ -19925,13 +19942,59 @@ onTextAreaClicked : function() {
     console.log("text area was clicked");
 },
 
-onSuggestionSubmitted : function() {
-    console.log("on suggestion submitted")
+componentWillReceiveProps : function(nextProps) {
+    this.setState({
+        explanations : nextProps.explanations,
+    });
+},
+
+componentWillMount : function() {
+     this.setState({
+        explanations : this.props.explanations,
+     });
+},
+
+updateText : function(event) {
+    console.log("in update text")
+    console.log("value: " + event.target.value)
+    this.setState({
+        newExplanation : event.target.value,
+    })
+},
+
+onExplanationSubmitted : function(event) {
+    ///SEND THIS TO SERVER
+
+    console.log("on explanation submitted")
+    var newExplanationStr = this.state.newExplanation;
+    console.log("new explanations str: " + newExplanationStr)
+    var newExplanationObj = {
+        "explanation_id" : this.state.explanations.length + 1,
+        "explanation" : newExplanationStr,
+        "upvotes": 0
+    }
+    console.log(this.state.explanations)
+    var newExplanations = this.state.explanations;
+    newExplanations.push(newExplanationObj);
+    if (newExplanationStr != undefined) {
+        this.setState({
+            explanations : newExplanations,
+            explanationSubmitted : true
+        });
+    }
+
+    // $.get("http://localhost:3000/allQuizData", function(result) {
+    //     console.log("in the callback");
+    //     allQuizData = result;
+    //     quizData = result[0];
+    //    // DO STUFF HERE AFTER RECEIVING DATA FROM SERVER
+    // }.bind(this));
 },
 
 getExplanations : function() {
+ //TODO: sort these by value
  var listItems = [];
-    var explanations = this.props.explanations;
+    var explanations = this.state.explanations;
     for (var i = 0; i < explanations.length; i++) {
         var newAnswer = (
             React.createElement("div", null, 
@@ -19944,14 +20007,22 @@ getExplanations : function() {
 
 render: function() {
     console.log("here in explanationBox");
+
+    var addExplanationBox = (this.state.explanationSubmitted) ? null :
+        (React.createElement("div", null, 
+            React.createElement("textarea", {
+            ref: "explanationTextArea", 
+            defaultValue: "Write an explanation for why the answer you chose is incorrect.", 
+            onClick: this.onTextAreaClicked, 
+            onChange: this.updateText}), 
+            React.createElement("input", {type: "button", value: "Add Suggestion", onClick: this.onExplanationSubmitted})
+        ));
+
     return (
    React.createElement("div", null, 
        	React.createElement("div", {className: "CommentBox"}, 
             this.getExplanations(), 
-                React.createElement("textarea", {
-                    defaultValue: "Write an explanation for why the answer you chose is incorrect.", 
-                    onClick: this.onTextAreaClicked}), 
-                React.createElement("input", {type: "button", value: "Add Suggestion", onClick: this.onSuggestionSubmitted})
+            addExplanationBox
         )
     )
     );
@@ -19960,7 +20031,7 @@ render: function() {
 
 
 
-},{"./explanation.jsx":160,"react":157}],162:[function(require,module,exports){
+},{"./HelloWorld.jsx":158,"./explanation.jsx":160,"react":157}],162:[function(require,module,exports){
 var React = require('react');
 var ExplanationBoxComponent = require('./explanationBox.jsx');
 
@@ -20016,6 +20087,7 @@ getAnswers : function() {
             React.createElement("label", null, 
                 React.createElement("input", {type: "radio", 
                  name: "answerButtons", 
+                 checked: this.state.selectedQuestion == i, 
                  value: i, 
                  onClick: this.selectAnswer}), 
                     answers[i]["answer"]
@@ -20036,8 +20108,8 @@ render: function() {
         React.createElement("form", {onSubmit: this.formSubmitted}, 
                 React.createElement("div", null, " ", this.getAnswers(), " ")
         ), 
-        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked}), 
-            this.state.explanations
+        this.state.explanations, 
+        React.createElement("input", {type: "button", value: "next", onClick: this.props.onNextButtonClicked})
         )
         )
 }

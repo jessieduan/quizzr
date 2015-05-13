@@ -1,6 +1,14 @@
 var React = require('react');
 
 module.exports = React.createClass({
+getInitialState : function() {
+        return {
+            userName : undefined,
+            emailAddress  : undefined,
+            canContinue : false,
+        };
+    },
+
 doAlert: function() {
     alert("hi there!");
 },
@@ -15,13 +23,15 @@ formSubmitted : function() {
 
 userNameChanged : function(event) {
  this.setState ({
-       userName  : event.target.value
+       userName  : event.target.value,
+       canContinue : this.state.emailAddress != undefined
     });
 },
 
 emailChanged : function(event) {
  this.setState ({
-       emailAddress  : event.target.value
+       emailAddress  : event.target.value,
+       canContinue : this.state.userName != undefined
     });
     //validate email here?
 },
@@ -29,7 +39,8 @@ emailChanged : function(event) {
 render: function() {
     return (
     <div>
-        <h1>This is another email component again</h1>
+        <h1>Welcome to quizzr!</h1>
+        Enter your name and email address to get started with our quiz.
          <form onSubmit={this.formSubmitted}>
             <div>
                 <label>
@@ -45,7 +56,7 @@ render: function() {
                     onChange={this.emailChanged}/>
                 </label>
             </div>
-        <input type='submit' value='next' onClick={this.formSubmitted} />
+        <input type='submit' value='next' disabled={!this.state.canContinue} onClick={this.formSubmitted} />
         </form>
     </div>
     )

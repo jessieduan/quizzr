@@ -53,6 +53,7 @@ getAnswers : function() {
             <label>
                 <input type="radio"
                  name="answerButtons"
+                 checked={this.state.selectedQuestion == i}
                  value={i}
                  onClick={this.selectAnswer} />
                     {answers[i]["answer"]}
@@ -73,8 +74,8 @@ render: function() {
         <form onSubmit={this.formSubmitted}>
                 <div> {this.getAnswers()} </div>
         </form>
+        {this.state.explanations}
         <input type='button' value='next' onClick={this.props.onNextButtonClicked} />
-            {this.state.explanations}
         </div>
         )
 }
