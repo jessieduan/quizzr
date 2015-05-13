@@ -31,6 +31,15 @@ updateText : function(event) {
     })
 },
 
+onUpvoteOrExplanationAdded : function() {
+    console.log("in explanationBox onUpvoteOrExplanationAdded");
+     this.setState({
+        explanations : this.props.explanations,
+    });
+    this.forceUpdate();
+    this.props.onUpvoteOrExplanationAdded();
+},
+
 onExplanationSubmitted : function(event) {
     ///SEND THIS TO SERVER
 
@@ -51,7 +60,7 @@ onExplanationSubmitted : function(event) {
             explanationSubmitted : true
         });
     }
-    this.props.onUpvoteOrExplanationAdded();
+    this.onUpvoteOrExplanationAdded();
 
     // $.get("http://localhost:3000/allQuizData", function(result) {
     //     console.log("in the callback");
@@ -59,6 +68,34 @@ onExplanationSubmitted : function(event) {
     //     quizData = result[0];
     //    // DO STUFF HERE AFTER RECEIVING DATA FROM SERVER
     // }.bind(this));
+},
+
+
+getExplanations : function() {
+ //TODO: sort these by value
+ console.log("in get explanations");
+
+
+   var listItems = [];
+
+    var explanationsArray = new Array;
+    for(var o in this.state.explanations) {
+        explanationsArray.push(this.state.explanations[o]);
+    }
+    explanationsArray.sort(function(a, b) {
+        return b.upvotes - a.upvotes;
+    });
+
+    //var explanations = this.state.explanations;
+    for (var i = 0; i < explanationsArray.length; i++) {
+        var newAnswer = (
+            <div>
+                <ExplanationComponent explanation={explanationsArray[i]}
+                    onVote={this.onUpvoteOrExplanationAdded}/>
+            </div>);
+        listItems.push(newAnswer);
+    }
+    return listItems;
 },
 
 getExplanations : function() {
@@ -81,7 +118,7 @@ getExplanations : function() {
         var newAnswer = (
             <div>
                 <ExplanationComponent explanation={explanationsArray[i]}
-                    onVote={this.props.onUpvoteOrExplanationAdded}/>
+                    onVote={this.onUpvoteOrExplanationAdded}/>
             </div>);
         listItems.push(newAnswer);
     }
@@ -111,7 +148,7 @@ render: function() {
     return (
    <div>
        	<div className="ExplanationBox">
-            {this.getExplanations()}
+            {this.state.explanations}
             {addExplanationBox}
         </div>
     </div>

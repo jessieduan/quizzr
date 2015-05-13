@@ -19943,6 +19943,7 @@ upvote : function() {
             upvotes : this.state.upvotes + 1,
             voted : true
         });
+    console.log("in explanation upvote")
     this.props.onVote();
 
 },
@@ -20012,6 +20013,15 @@ updateText : function(event) {
     })
 },
 
+onUpvoteOrExplanationAdded : function() {
+    console.log("in explanationBox onUpvoteOrExplanationAdded");
+     this.setState({
+        explanations : this.props.explanations,
+    });
+    this.forceUpdate();
+    this.props.onUpvoteOrExplanationAdded();
+},
+
 onExplanationSubmitted : function(event) {
     ///SEND THIS TO SERVER
 
@@ -20032,7 +20042,7 @@ onExplanationSubmitted : function(event) {
             explanationSubmitted : true
         });
     }
-    this.props.onUpvoteOrExplanationAdded();
+    this.onUpvoteOrExplanationAdded();
 
     // $.get("http://localhost:3000/allQuizData", function(result) {
     //     console.log("in the callback");
@@ -20041,6 +20051,7 @@ onExplanationSubmitted : function(event) {
     //    // DO STUFF HERE AFTER RECEIVING DATA FROM SERVER
     // }.bind(this));
 },
+
 
 getExplanations : function() {
  //TODO: sort these by value
@@ -20062,7 +20073,7 @@ getExplanations : function() {
         var newAnswer = (
             React.createElement("div", null, 
                 React.createElement(ExplanationComponent, {explanation: explanationsArray[i], 
-                    onVote: this.props.onUpvoteOrExplanationAdded})
+                    onVote: this.onUpvoteOrExplanationAdded})
             ));
         listItems.push(newAnswer);
     }

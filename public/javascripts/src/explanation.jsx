@@ -19,6 +19,7 @@ upvote : function() {
             upvotes : this.state.upvotes + 1,
             voted : true
         });
+    console.log("in explanation upvote")
     this.props.onVote();
 
 },
