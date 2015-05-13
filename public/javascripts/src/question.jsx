@@ -25,6 +25,8 @@ module.exports = React.createClass({
             this.setState({
                 selectedAnswer : undefined,
                 explanations : null,
+                canContinue : false,
+                errorMessage : null,
             });
         }
     },
@@ -42,11 +44,14 @@ module.exports = React.createClass({
          //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
 
         var index = event.target.value;
-        console.log(index);
+        var correct = (parseInt(index) === parseInt(this.props.question["correct_answer_id"]));
+        console.log(index  + " vs  " + this.props.question["correct_answer_id"]);
+        console.log(correct);
         this.setState ({
             selectedAnswer : index,
             explanations : (<ExplanationBoxComponent
                 explanations={this.props.question["answers"][index]["explanations"]}
+                correct={correct}
                 onUpvoteOrExplanationAdded = {this.onUpvoteOrExplanationAdded} />)
         });
         console.log("adding explanations")
@@ -79,10 +84,15 @@ onNextButtonClicked : function() {
     if (this.state.canContinue) {
         this.props.onNextButtonClicked();
         return;
-    }
-    this.setState({
+    } if (this.state.selectedAnswer) {
+        this.setState({
         errorMessage : "Please add a new explanation or upvote an existing one."
+        });
+    } else {
+    this.setState({
+        errorMessage : "Please select an answer."
     });
+}
 },
 
 formSubmitted : function() {

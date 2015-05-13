@@ -63,12 +63,24 @@ onExplanationSubmitted : function(event) {
 
 getExplanations : function() {
  //TODO: sort these by value
- var listItems = [];
-    var explanations = this.state.explanations;
-    for (var i = 0; i < explanations.length; i++) {
+ console.log("in get explanations");
+
+
+   var listItems = [];
+
+    var explanationsArray = new Array;
+    for(var o in this.state.explanations) {
+        explanationsArray.push(this.state.explanations[o]);
+    }
+    explanationsArray.sort(function(a, b) {
+        return b.upvotes - a.upvotes;
+    });
+
+    //var explanations = this.state.explanations;
+    for (var i = 0; i < explanationsArray.length; i++) {
         var newAnswer = (
             <div>
-                <ExplanationComponent explanation={explanations[i]}
+                <ExplanationComponent explanation={explanationsArray[i]}
                     onVote={this.props.onUpvoteOrExplanationAdded}/>
             </div>);
         listItems.push(newAnswer);
@@ -78,13 +90,17 @@ getExplanations : function() {
 
 render: function() {
     console.log("here in explanationBox");
+    var incorrectStr = "Write an explanation for why the answer you chose is incorrect."
+    var correctStr = "How did you know that this was the right answer?"
+    console.log(this.props.correct);
+    var textAreaStr = (this.props.correct) ? correctStr : incorrectStr;
 
     var addExplanationBox = (this.state.explanationSubmitted) ? null :
         (<div>
             <textarea
             className="explanationTextArea"
             ref="explanationTextArea"
-            defaultValue="Write an explanation for why the answer you chose is incorrect."
+            defaultValue={textAreaStr}
             onClick={this.onTextAreaClicked}
             onChange={this.updateText}/>
             <div>

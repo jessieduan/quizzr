@@ -20044,12 +20044,24 @@ onExplanationSubmitted : function(event) {
 
 getExplanations : function() {
  //TODO: sort these by value
- var listItems = [];
-    var explanations = this.state.explanations;
-    for (var i = 0; i < explanations.length; i++) {
+ console.log("in get explanations");
+
+
+   var listItems = [];
+
+    var explanationsArray = new Array;
+    for(var o in this.state.explanations) {
+        explanationsArray.push(this.state.explanations[o]);
+    }
+    explanationsArray.sort(function(a, b) {
+        return b.upvotes - a.upvotes;
+    });
+
+    //var explanations = this.state.explanations;
+    for (var i = 0; i < explanationsArray.length; i++) {
         var newAnswer = (
             React.createElement("div", null, 
-                React.createElement(ExplanationComponent, {explanation: explanations[i], 
+                React.createElement(ExplanationComponent, {explanation: explanationsArray[i], 
                     onVote: this.props.onUpvoteOrExplanationAdded})
             ));
         listItems.push(newAnswer);
@@ -20059,13 +20071,17 @@ getExplanations : function() {
 
 render: function() {
     console.log("here in explanationBox");
+    var incorrectStr = "Write an explanation for why the answer you chose is incorrect."
+    var correctStr = "How did you know that this was the right answer?"
+    console.log(this.props.correct);
+    var textAreaStr = (this.props.correct) ? correctStr : incorrectStr;
 
     var addExplanationBox = (this.state.explanationSubmitted) ? null :
         (React.createElement("div", null, 
             React.createElement("textarea", {
             className: "explanationTextArea", 
             ref: "explanationTextArea", 
-            defaultValue: "Write an explanation for why the answer you chose is incorrect.", 
+            defaultValue: textAreaStr, 
             onClick: this.onTextAreaClicked, 
             onChange: this.updateText}), 
             React.createElement("div", null, 
@@ -20105,6 +20121,7 @@ module.exports = React.createClass({displayName: "exports",
     onUpvoteOrExplanationAdded : function() {
         this.setState({
             canContinue : true,
+            errorMessage : null,
         });
     },
 
@@ -20113,6 +20130,8 @@ module.exports = React.createClass({displayName: "exports",
             this.setState({
                 selectedAnswer : undefined,
                 explanations : null,
+                canContinue : false,
+                errorMessage : null,
             });
         }
     },
@@ -20130,11 +20149,14 @@ module.exports = React.createClass({displayName: "exports",
          //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
 
         var index = event.target.value;
-        console.log(index);
+        var correct = (parseInt(index) === parseInt(this.props.question["correct_answer_id"]));
+        console.log(index  + " vs  " + this.props.question["correct_answer_id"]);
+        console.log(correct);
         this.setState ({
             selectedAnswer : index,
             explanations : (React.createElement(ExplanationBoxComponent, {
                 explanations: this.props.question["answers"][index]["explanations"], 
+                correct: correct, 
                 onUpvoteOrExplanationAdded: this.onUpvoteOrExplanationAdded}))
         });
         console.log("adding explanations")
@@ -20167,10 +20189,15 @@ onNextButtonClicked : function() {
     if (this.state.canContinue) {
         this.props.onNextButtonClicked();
         return;
-    }
-    this.setState({
+    } if (this.state.selectedAnswer) {
+        this.setState({
         errorMessage : "Please add a new explanation or upvote an existing one."
+        });
+    } else {
+    this.setState({
+        errorMessage : "Please select an answer."
     });
+}
 },
 
 formSubmitted : function() {
@@ -20214,7 +20241,7 @@ render: function() {
         ), 
         this.state.explanations, 
         React.createElement("input", {type: "button", value: "next", onClick: this.onNextButtonClicked}), 
-        this.state.errorMessage
+        React.createElement("div", null, this.state.errorMessage)
         )
         )
 }
