@@ -47,7 +47,7 @@ getAnswers : function() {
 //                 value={answers[i]['answer_id']}
     var listItems = [];
     var answers = this.props.question["answers"];
-    for (var i = 0; i < answers.length; i++) {
+    for (var i = 1; i <= Object.keys(answers).length; i++) {
         var newAnswer = (
             <div>
             <label>

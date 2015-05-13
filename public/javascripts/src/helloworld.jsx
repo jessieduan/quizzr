@@ -28,16 +28,16 @@ onAnswerSelected : function(answer) {
 getCurrentComponent : function() {
     if (this.state.questionNum === 0) {
         return (<EmailComponent onNextButtonClicked={this.advanceQuestion}/>);
-    } else if (this.state.questionNum > this.props.quizData.questions.length) {
-        return (<QuizFinishedComponent />);
-    } else {
-        console.log(this.props.quizData.questions[this.state.questionNum-1]);
-        return (
+    } else if ((this.state.questionNum) in this.props.quizData.questions) {
+         return (
             <QuestionComponent
             onNextButtonClicked={this.advanceQuestion}
             onAnswerSelected={this.onAnswerSelected}
-            question={this.props.quizData.questions[this.state.questionNum-1]}
+            question={this.props.quizData.questions[this.state.questionNum]}
             questionNum={this.state.questionNum} />);
+    } else {
+        return (<QuizFinishedComponent />);
+        //console.log(this.props.quizData.questions[this.state.questionNum-1]);
     }
 },
 

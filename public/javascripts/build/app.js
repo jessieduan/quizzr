@@ -19811,16 +19811,16 @@ onAnswerSelected : function(answer) {
 getCurrentComponent : function() {
     if (this.state.questionNum === 0) {
         return (React.createElement(EmailComponent, {onNextButtonClicked: this.advanceQuestion}));
-    } else if (this.state.questionNum > this.props.quizData.questions.length) {
-        return (React.createElement(QuizFinishedComponent, null));
-    } else {
-        console.log(this.props.quizData.questions[this.state.questionNum-1]);
-        return (
+    } else if ((this.state.questionNum) in this.props.quizData.questions) {
+         return (
             React.createElement(QuestionComponent, {
             onNextButtonClicked: this.advanceQuestion, 
             onAnswerSelected: this.onAnswerSelected, 
-            question: this.props.quizData.questions[this.state.questionNum-1], 
+            question: this.props.quizData.questions[this.state.questionNum], 
             questionNum: this.state.questionNum}));
+    } else {
+        return (React.createElement(QuizFinishedComponent, null));
+        //console.log(this.props.quizData.questions[this.state.questionNum-1]);
     }
 },
 
@@ -20010,7 +20010,7 @@ getAnswers : function() {
 //                 value={answers[i]['answer_id']}
     var listItems = [];
     var answers = this.props.question["answers"];
-    for (var i = 0; i < answers.length; i++) {
+    for (var i = 1; i <= Object.keys(answers).length; i++) {
         var newAnswer = (
             React.createElement("div", null, 
             React.createElement("label", null, 
