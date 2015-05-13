@@ -7,7 +7,7 @@ module.exports = React.createClass({
 render: function() {
     return (
         <div>
-            <p> {this.props.explanation["explanation"]} </p>
+            <p> {this.props.explanation["explanation"]} <button type="button">Upvote</button></p>
         </div>
     );
 }
