@@ -5,12 +5,26 @@ doAlert: function() {
     alert("hi there!");
 },
 
-formSubmitted : function() {
+formSubmitted : function(form) {
     event.preventDefault(event);
-    //SEND NAME AND EMAIL TO SERVER HERE
-    console.log("Email address: " + this.state.emailAddress);
-    console.log("Name: " + this.state.userName);
-    this.props.onNextButtonClicked()
+
+    var newUser = {
+        username: this.state.userName,
+        useremail: this.state.emailAddress
+    };
+
+    $.ajax({
+        url: '/adduser',
+        dataType: 'json',
+        type: 'POST',
+        data: newUser,
+        success: function(data) {
+            this.props.onNextButtonClicked();
+        }.bind(this),
+        error: function(xhr, status, err) {
+            console.log(err);
+        }.bind(this)
+    });
 },
 
 userNameChanged : function(event) {
@@ -45,7 +59,7 @@ render: function() {
                     onChange={this.emailChanged}/>
                 </label>
             </div>
-        <input type='submit' value='next' onClick={this.formSubmitted} />
+        <input type='submit' value='next' />
         </form>
     </div>
     )

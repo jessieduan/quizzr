@@ -19849,12 +19849,29 @@ doAlert: function() {
     alert("hi there!");
 },
 
-formSubmitted : function() {
+formSubmitted : function(form) {
     event.preventDefault(event);
-    //SEND NAME AND EMAIL TO SERVER HERE
-    console.log("Email address: " + this.state.emailAddress);
-    console.log("Name: " + this.state.userName);
-    this.props.onNextButtonClicked()
+
+    var newUser = {
+        username: this.state.userName,
+        useremail: this.state.emailAddress
+    };
+
+    console.log('making ajax request');
+    $.ajax({
+        url: '/adduser',
+        dataType: 'json',
+        type: 'POST',
+        data: newUser,
+        success: function(data) {
+            alert('yay!');
+            this.props.onNextButtonClicked();
+        }.bind(this),
+        error: function(xhr, status, err) {
+            console.log(err);
+        }.bind(this)
+    });
+
 },
 
 userNameChanged : function(event) {
@@ -19889,7 +19906,7 @@ render: function() {
                     onChange: this.emailChanged})
                 )
             ), 
-        React.createElement("input", {type: "submit", value: "next", onClick: this.formSubmitted})
+        React.createElement("input", {type: "submit", value: "next"})
         )
     )
     )

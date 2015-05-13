@@ -89,7 +89,7 @@ router.post('/submitanswer', function(req, res) {
 
 });
 
-/* POST to Add User Service - TEST */
+/* POST to Add User Service */
 router.post('/adduser', function(req, res) {
 
     // Set our internal DB variable
@@ -102,20 +102,30 @@ router.post('/adduser', function(req, res) {
     // Set our collection
     var collection = db.get('users');
 
+    // TODO: change quizzes_taken to not be 1
     // Submit to the DB
     collection.insert({
         "name" : userName,
-        "email" : userEmail
+        "email" : userEmail,
+        "is_control": Math.random() > 0.5,
+        "quizzes_taken": {
+            "1": {
+                "time_started": Date.now(),
+                "attempts": []
+            }
+        }
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
+            console.log(err);
             res.send("There was a problem adding the information to the database.");
         }
         else {
+            res.end('{"success": true, "status": 200}');
             // If it worked, set the header so the address bar doesn't still say /adduser
-            res.location("mongotest");
+            //res.location("mongotest");
             // And forward to success page
-            res.redirect("mongotest");
+            //res.redirect("mongotest");
         }
     });
 });
