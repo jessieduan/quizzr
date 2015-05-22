@@ -32,35 +32,19 @@ module.exports = React.createClass({
     },
 
     selectAnswer : function(event) {
-        //$iconsole.log(this.props.)
-
-
-        //alert(questionNum);
-        //quiz id
-        //question id
-        //answer chosen = answer_id
-        //user id
-        //alert("selected question")
-         //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
-
         var index = event.target.value;
-        var correct = (parseInt(index) === parseInt(this.props.question["correct_answer_id"]));
-        console.log(index  + " vs  " + this.props.question["correct_answer_id"]);
-        console.log(correct);
+        console.log("SELECTING: " + index);
+
+        var newExplanations = this.props.question["answers"][index]["explanations"];
         this.setState ({
             selectedAnswer : index,
-            explanations : (<ExplanationBoxComponent
-                explanations={this.props.question["answers"][index]["explanations"]}
-                correct={correct}
-                onUpvoteOrExplanationAdded = {this.onUpvoteOrExplanationAdded} />)
         });
         console.log("adding explanations")
-        console.log(this.props.question["answers"][index]["explanations"]);
+        console.log(newExplanations);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
     },
 
 getAnswers : function() {
-//                 value={answers[i]['answer_id']}
     var listItems = [];
     var answers = this.props.question["answers"];
     for (var i = 1; i <= Object.keys(answers).length; i++) {
@@ -97,35 +81,24 @@ onNextButtonClicked : function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-
+    dataStore.saveAttempt();
     // TODO: POPULATE newAttempt
-    var newAttempt = {};
-/*
-    var newAttempt = {
-        useremail: ,
-        quizID: 1,
-        questionID: this.props.questionNum,
-        answerID: this.state.selectedAnswer,
-        explanationWritten: ,
-        explanationVotedFor: ,
-        wasUpvote: ,
-    };
-*/
-    $.ajax({
-        url: '/submitanswer',
-        dataType: 'json',
-        type: 'POST',
-        data: newAttempt,
-        success: function(data) {
-            this.props.onNextButtonClicked();
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.log(err);
-        }.bind(this)
-    });
+
 },
 
 render: function() {
+
+    var correct = (this.state.selectedAnswer) ?
+        (parseInt(this.state.selectedAnswer) === parseInt(this.props.question["correct_answer_id"]))
+        : false;
+    var explanationBox = (this.state.selectedAnswer) ?
+        (<ExplanationBoxComponent
+                explanations={this.props.question["answers"][this.state.selectedAnswer]["explanations"]}
+                correct={correct}
+                questionID={this.props.questionNum}
+                answerID={this.state.selectedAnswer}
+                onUpvoteOrExplanationAdded = {this.onUpvoteOrExplanationAdded} />) : null;
+
     console.log("received data: ");
     console.log(this.props.question)
     return (
@@ -134,7 +107,7 @@ render: function() {
         <form onSubmit={this.formSubmitted}>
                 <div> {this.getAnswers()} </div>
         </form>
-        {this.state.explanations}
+        {explanationBox}
         <input type='button' value='next' onClick={this.onNextButtonClicked} />
         <div>{this.state.errorMessage}</div>
         </div>

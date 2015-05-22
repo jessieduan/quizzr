@@ -11,16 +11,10 @@ onTextAreaClicked : function(event) {
     console.log("text area was clicked");
 },
 
-componentWillReceiveProps : function(nextProps) {
-    this.setState({
-        explanations : nextProps.explanations,
+getInitialState : function() {
+    return ({
+        explanationSubmitted : false,
     });
-},
-
-componentWillMount : function() {
-     this.setState({
-        explanations : this.props.explanations,
-     });
 },
 
 updateText : function(event) {
@@ -31,36 +25,22 @@ updateText : function(event) {
     })
 },
 
-onUpvoteOrExplanationAdded : function() {
-    console.log("in explanationBox onUpvoteOrExplanationAdded");
-     this.setState({
-        explanations : this.props.explanations,
-    });
-    this.forceUpdate();
-    this.props.onUpvoteOrExplanationAdded();
-},
-
 onExplanationSubmitted : function(event) {
     ///SEND THIS TO SERVER
-
     console.log("on explanation submitted")
     var newExplanationStr = this.state.newExplanation;
+    if (!newExplanationStr || newExplanationStr == "") return;
+     this.setState({
+        explanationSubmitted : true,
+    });
     console.log("new explanations str: " + newExplanationStr)
     var newExplanationObj = {
-        "explanation_id" : this.state.explanations.length + 1,
+        "explanation_id" : this.props.explanations.length + 1,
         "explanation" : newExplanationStr,
         "upvotes": 0
     }
-    console.log(this.state.explanations)
-    var newExplanations = this.state.explanations;
-    newExplanations.push(newExplanationObj);
-    if (newExplanationStr != undefined) {
-        this.setState({
-            explanations : newExplanations,
-            explanationSubmitted : true
-        });
-    }
-    this.onUpvoteOrExplanationAdded();
+    this.props.onUpvoteOrExplanationAdded();
+    dataStore.addExplanation(this.props.questionID, this.props.answerID, newExplanationObj);
 
     // $.get("http://localhost:3000/allQuizData", function(result) {
     //     console.log("in the callback");
@@ -71,44 +51,25 @@ onExplanationSubmitted : function(event) {
 },
 
 
-getExplanations : function() {
- //TODO: sort these by value
- console.log("in get explanations");
-
-
-   var listItems = [];
-
-    var explanationsArray = new Array;
-    for(var o in this.state.explanations) {
-        explanationsArray.push(this.state.explanations[o]);
+getInitialExplanationsArr : function(explanationsObj) {
+var explanationsArray = new Array;
+    for(var o in this.props.explanations) {
+        explanationsArray.push(this.props.explanations[o]);
     }
     explanationsArray.sort(function(a, b) {
         return b.upvotes - a.upvotes;
     });
-
-    //var explanations = this.state.explanations;
-    for (var i = 0; i < explanationsArray.length; i++) {
-        var newAnswer = (
-            <div>
-                <ExplanationComponent explanation={explanationsArray[i]}
-                    onVote={this.onUpvoteOrExplanationAdded}/>
-            </div>);
-        listItems.push(newAnswer);
-    }
-    return listItems;
+    return explanationsArray;
 },
 
-getExplanations : function() {
+getExplanationElems : function() {
  //TODO: sort these by value
  console.log("in get explanations");
-
-
-   var listItems = [];
-
     var explanationsArray = new Array;
-    for(var o in this.state.explanations) {
-        explanationsArray.push(this.state.explanations[o]);
+    for(var o in this.props.explanations) {
+        explanationsArray.push(this.props.explanations[o]);
     }
+   var listItems = [];
     explanationsArray.sort(function(a, b) {
         return b.upvotes - a.upvotes;
     });
@@ -118,7 +79,9 @@ getExplanations : function() {
         var newAnswer = (
             <div>
                 <ExplanationComponent explanation={explanationsArray[i]}
-                    onVote={this.onUpvoteOrExplanationAdded}/>
+                    questionID = {this.props.questionID}
+                    answerID = {this.props.answerID}
+                    onVote = {this.props.onUpvoteOrExplanationAdded} />
             </div>);
         listItems.push(newAnswer);
     }
@@ -147,12 +110,11 @@ render: function() {
 
     return (
    <div>
-       	<div className="ExplanationBox">
-            {this.state.explanations}
+        <div className="ExplanationBox">
+            {this.getExplanationElems()}
             {addExplanationBox}
         </div>
     </div>
     );
   }
 });
-

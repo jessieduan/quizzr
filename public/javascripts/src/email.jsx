@@ -15,24 +15,10 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
-
-    var newUser = {
-        username: this.state.userName,
-        useremail: this.state.emailAddress
-    };
-
-    $.ajax({
-        url: '/adduser',
-        dataType: 'json',
-        type: 'POST',
-        data: newUser,
-        success: function(data) {
-            this.props.onNextButtonClicked();
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.log(err);
-        }.bind(this)
-    });
+    dataStore.saveNewUser(
+        this.state.userName,
+        this.state.emailAddress);
+    this.props.onNextButtonClicked();
 },
 
 userNameChanged : function(event) {

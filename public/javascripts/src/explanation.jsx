@@ -6,32 +6,27 @@ module.exports = React.createClass({
 
 getInitialState : function() {
         return {
-            upvotes : this.props.explanation["upvotes"],
             voted : false
         };
     },
 
-upvote : function() {
+saveVote : function(value) {
     if (this.state.voted) {
         return;
     }
     this.setState ({
-            upvotes : this.state.upvotes + 1,
-            voted : true
-        });
-    console.log("in explanation upvote")
-    this.props.onVote();
-
+        voted : true
+    });
+    this.props.explanation["explanation_id"]
+    dataStore.addVote(this.props.questionID, this.props.answerID, this.props.explanation["explanation_id"], value);
 },
+
+upvote : function() {
+    this.saveVote(1);
+},
+
 downvote : function() {
-  if (this.state.voted) {
-    return;
-  }
-  this.setState ({
-            upvotes : this.state.upvotes - 1,
-            voted : true
-        });
-  this.props.onVote();
+   this.saveVote(-1);
 },
 
 render: function() {
@@ -43,7 +38,7 @@ render: function() {
                 <img src="http://www.ratemyroomie.com/Content/Images/upvoteIcon2.png"
                     onClick={this.upvote}/>
                 </div>
-                <div className="upvoteText">{this.state.upvotes}</div>
+                <div className="upvoteText">{this.props.explanation["upvotes"]}</div>
                 <div>
                 <img src="http://www.ratemyroomie.com/Content/Images/downvoteIcon2.png"
                     onClick={this.downvote}/>
