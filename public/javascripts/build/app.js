@@ -5,10 +5,94 @@ var HelloWorld = require('./HelloWorld.jsx');
 var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML)
 var quizData = allQuizData[0];
 
-React.render(
-    React.createElement(HelloWorld, {quizData: quizData}),
-    document.getElementById('example')
-);
+function DataStore (data) {
+    this.quizData = data;
+    this.userEmail = "";
+
+    this.getQuizData = function() {
+        return this.quizData;
+    }
+
+    this.render = function() {
+        React.render(
+            React.createElement(HelloWorld, {quizData: this.quizData}),
+            document.getElementById('example')
+        );
+    };
+    this.addExplanation = function(questionID, answerID, explanation) {
+        this.quizData['questions'][questionID]['answers'][answerID]['explanations'].push(explanation);
+        this.render();
+    };
+
+    this.addVote = function(questionID, answerID, explanationID, value) {
+        //value should either be 1 (for upvote) or -1 (for downvote)
+        var explanations = this.quizData['questions'][questionID]['answers'][answerID]['explanations'];
+        for (var i = 0; i < explanations.length; i++) {
+            var explanation = explanations[i];
+            if (parseInt(explanation["explanation_id"]) == parseInt(explanationID)) {
+                explanation["upvotes"] = explanation["upvotes"] + value;
+            }
+        }
+        this.render();
+    };
+
+    this.saveNewUser = function(userName, email) {
+        this.userEmail = email;
+        var newUser = {
+            username: userName,
+            useremail: email
+        };
+
+        $.ajax({
+            url: '/adduser',
+            dataType: 'json',
+            type: 'POST',
+            data: newUser,
+            success: function(data) {
+                console.log("success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.log(err);
+            }.bind(this)
+        });
+
+    };
+
+    this.saveAttempt = function(questionID) {
+        var newAttempt = {};
+        /*
+        var newAttempt = {
+            useremail: this.useremail,
+            quizID: 1,
+            questionID: questionID,
+            answerID: this.state.selectedAnswer,
+            explanationWritten: ,
+            explanationVotedFor: ,
+            wasUpvote: ,
+        };*/
+
+        $.ajax({
+            url: '/submitanswer',
+            dataType: 'json',
+            type: 'POST',
+            data: newAttempt,
+            success: function(data) {
+                console.log("success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.log(err);
+            }.bind(this)
+        });
+    };
+
+    this.addAttempt = function() {
+        this.render();
+    };
+};
+
+dataStore = new DataStore(quizData);
+dataStore.render();
+
 
 },{"./HelloWorld.jsx":158,"react":157}],2:[function(require,module,exports){
 // shim for using process in browser
@@ -19841,7 +19925,34 @@ render: function() {
 }
 });
 
-},{"./email.jsx":159,"./question.jsx":162,"./quizFinished.jsx":163,"react":157}],159:[function(require,module,exports){
+},{"./email.jsx":160,"./question.jsx":163,"./quizFinished.jsx":164,"react":157}],159:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    onSelectAnswer : function() {
+        this.props.onSelectAnswer(this.props.answerID);
+    },
+
+    render: function() {
+    return (
+         React.createElement("div", null, 
+
+                React.createElement("input", {type: "radio", 
+                 name: "answerButtons", 
+                 id: "label_" + this.props.answerID, 
+                 checked: this.props.checked, 
+                 value: this.props.answerID, 
+                 onClick: this.onSelectAnswer}), 
+                 React.createElement("label", {htmlFor: "label_" + this.props.answerID, 
+                    className: this.props.correct ? "correctLabel" : "incorrectLabel"}, 
+                this.props.answerStr
+            )
+            )
+    );
+}
+});
+
+},{"react":157}],160:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19859,24 +19970,10 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
-
-    var newUser = {
-        username: this.state.userName,
-        useremail: this.state.emailAddress
-    };
-
-    $.ajax({
-        url: '/adduser',
-        dataType: 'json',
-        type: 'POST',
-        data: newUser,
-        success: function(data) {
-            this.props.onNextButtonClicked();
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.log(err);
-        }.bind(this)
-    });
+    dataStore.saveNewUser(
+        this.state.userName,
+        this.state.emailAddress);
+    this.props.onNextButtonClicked();
 },
 
 userNameChanged : function(event) {
@@ -19897,12 +19994,13 @@ emailChanged : function(event) {
 render: function() {
     return (
     React.createElement("div", null, 
-        React.createElement("h1", null, "Welcome to quizzr!"), 
-        "Enter your name and email address to get started with our quiz.", 
-         React.createElement("form", {onSubmit: this.formSubmitted}, 
+        React.createElement("h1", null, "Thanks for trying out quizzr!"), 
+        React.createElement("p", null, "The following quiz covers some material we have seen in CS376 this quarter.", 
+        React.createElement("br", null), "Enter your name and email address to get started!"), 
+         React.createElement("form", {onSubmit: this.formSubmitted, className: "userFields"}, 
             React.createElement("div", null, 
                 React.createElement("label", null, 
-                    React.createElement("input", {type: "text", placeholder: "Your name", name: "user_name", 
+                    React.createElement("input", {type: "text", className: "textInput", placeholder: "Your name", name: "user_name", 
                     //value={this.state.name}
                     onChange: this.userNameChanged, 
                     autoFocus: true})
@@ -19910,18 +20008,18 @@ render: function() {
             ), 
             React.createElement("div", null, 
                 React.createElement("label", null, 
-                React.createElement("input", {type: "text", placeholder: "email", name: "email_address", 
+                React.createElement("input", {type: "text", className: "textInput", placeholder: "email", name: "email_address", 
                     onChange: this.emailChanged})
                 )
             ), 
-        React.createElement("input", {type: "submit", value: "next", disabled: !this.state.canContinue, onClick: this.formSubmitted})
+        React.createElement("input", {type: "submit", value: "next >", disabled: !this.state.canContinue, onClick: this.formSubmitted})
         )
     )
     )
 }
 });
 
-},{"react":157}],160:[function(require,module,exports){
+},{"react":157}],161:[function(require,module,exports){
 var React = require('react');
 
 //A single explanation/solution for an answer
@@ -19930,32 +20028,27 @@ module.exports = React.createClass({displayName: "exports",
 
 getInitialState : function() {
         return {
-            upvotes : this.props.explanation["upvotes"],
             voted : false
         };
     },
 
-upvote : function() {
+saveVote : function(value) {
     if (this.state.voted) {
         return;
     }
     this.setState ({
-            upvotes : this.state.upvotes + 1,
-            voted : true
-        });
-    console.log("in explanation upvote")
-    this.props.onVote();
-
+        voted : true
+    });
+    this.props.explanation["explanation_id"]
+    dataStore.addVote(this.props.questionID, this.props.answerID, this.props.explanation["explanation_id"], value);
 },
+
+upvote : function() {
+    this.saveVote(1);
+},
+
 downvote : function() {
-  if (this.state.voted) {
-    return;
-  }
-  this.setState ({
-            upvotes : this.state.upvotes - 1,
-            voted : true
-        });
-  this.props.onVote();
+   this.saveVote(-1);
 },
 
 render: function() {
@@ -19967,7 +20060,7 @@ render: function() {
                 React.createElement("img", {src: "http://www.ratemyroomie.com/Content/Images/upvoteIcon2.png", 
                     onClick: this.upvote})
                 ), 
-                React.createElement("div", {className: "upvoteText"}, this.state.upvotes), 
+                React.createElement("div", {className: "upvoteText"}, this.props.explanation["upvotes"]), 
                 React.createElement("div", null, 
                 React.createElement("img", {src: "http://www.ratemyroomie.com/Content/Images/downvoteIcon2.png", 
                     onClick: this.downvote})
@@ -19979,7 +20072,7 @@ render: function() {
 });
 
 
-},{"react":157}],161:[function(require,module,exports){
+},{"react":157}],162:[function(require,module,exports){
 var React = require('react');
 var ExplanationComponent = require( './explanation.jsx')
 var HelloWorld = require('./HelloWorld.jsx');
@@ -19993,16 +20086,10 @@ onTextAreaClicked : function(event) {
     console.log("text area was clicked");
 },
 
-componentWillReceiveProps : function(nextProps) {
-    this.setState({
-        explanations : nextProps.explanations,
+getInitialState : function() {
+    return ({
+        explanationSubmitted : false,
     });
-},
-
-componentWillMount : function() {
-     this.setState({
-        explanations : this.props.explanations,
-     });
 },
 
 updateText : function(event) {
@@ -20013,36 +20100,22 @@ updateText : function(event) {
     })
 },
 
-onUpvoteOrExplanationAdded : function() {
-    console.log("in explanationBox onUpvoteOrExplanationAdded");
-     this.setState({
-        explanations : this.props.explanations,
-    });
-    this.forceUpdate();
-    this.props.onUpvoteOrExplanationAdded();
-},
-
 onExplanationSubmitted : function(event) {
     ///SEND THIS TO SERVER
-
     console.log("on explanation submitted")
     var newExplanationStr = this.state.newExplanation;
+    if (!newExplanationStr || newExplanationStr == "") return;
+     this.setState({
+        explanationSubmitted : true,
+    });
     console.log("new explanations str: " + newExplanationStr)
     var newExplanationObj = {
-        "explanation_id" : this.state.explanations.length + 1,
+        "explanation_id" : this.props.explanations.length + 1,
         "explanation" : newExplanationStr,
         "upvotes": 0
     }
-    console.log(this.state.explanations)
-    var newExplanations = this.state.explanations;
-    newExplanations.push(newExplanationObj);
-    if (newExplanationStr != undefined) {
-        this.setState({
-            explanations : newExplanations,
-            explanationSubmitted : true
-        });
-    }
-    this.onUpvoteOrExplanationAdded();
+    this.props.onUpvoteOrExplanationAdded();
+    dataStore.addExplanation(this.props.questionID, this.props.answerID, newExplanationObj);
 
     // $.get("http://localhost:3000/allQuizData", function(result) {
     //     console.log("in the callback");
@@ -20053,17 +20126,25 @@ onExplanationSubmitted : function(event) {
 },
 
 
-getExplanations : function() {
+getInitialExplanationsArr : function(explanationsObj) {
+var explanationsArray = new Array;
+    for(var o in this.props.explanations) {
+        explanationsArray.push(this.props.explanations[o]);
+    }
+    explanationsArray.sort(function(a, b) {
+        return b.upvotes - a.upvotes;
+    });
+    return explanationsArray;
+},
+
+getExplanationElems : function() {
  //TODO: sort these by value
  console.log("in get explanations");
-
-
-   var listItems = [];
-
     var explanationsArray = new Array;
-    for(var o in this.state.explanations) {
-        explanationsArray.push(this.state.explanations[o]);
+    for(var o in this.props.explanations) {
+        explanationsArray.push(this.props.explanations[o]);
     }
+   var listItems = [];
     explanationsArray.sort(function(a, b) {
         return b.upvotes - a.upvotes;
     });
@@ -20073,7 +20154,9 @@ getExplanations : function() {
         var newAnswer = (
             React.createElement("div", null, 
                 React.createElement(ExplanationComponent, {explanation: explanationsArray[i], 
-                    onVote: this.onUpvoteOrExplanationAdded})
+                    questionID: this.props.questionID, 
+                    answerID: this.props.answerID, 
+                    onVote: this.props.onUpvoteOrExplanationAdded})
             ));
         listItems.push(newAnswer);
     }
@@ -20096,14 +20179,17 @@ render: function() {
             onClick: this.onTextAreaClicked, 
             onChange: this.updateText}), 
             React.createElement("div", null, 
-                React.createElement("input", {type: "button", value: "Add Suggestion", onClick: this.onExplanationSubmitted})
+                React.createElement("input", {type: "button", className: "addExplanationButton", value: "Add Explanation", onClick: this.onExplanationSubmitted})
             )
         ));
 
+    var explanations = this.getExplanationElems();
+    var explanationText = (explanations.length == 0) ? null : "Explanations from your classmates: ";
     return (
    React.createElement("div", null, 
-       	React.createElement("div", {className: "ExplanationBox"}, 
-            this.getExplanations(), 
+        explanationText, 
+        React.createElement("div", {className: "ExplanationBox"}, 
+            explanations, 
             addExplanationBox
         )
     )
@@ -20111,11 +20197,11 @@ render: function() {
   }
 });
 
-
-
-},{"./HelloWorld.jsx":158,"./explanation.jsx":160,"react":157}],162:[function(require,module,exports){
+},{"./HelloWorld.jsx":158,"./explanation.jsx":161,"react":157}],163:[function(require,module,exports){
 var React = require('react');
 var ExplanationBoxComponent = require('./explanationBox.jsx');
+var AnswerComponent = require('./answer.jsx');
+
 
 module.exports = React.createClass({displayName: "exports",
 
@@ -20147,50 +20233,31 @@ module.exports = React.createClass({displayName: "exports",
         }
     },
 
-    selectAnswer : function(event) {
-        //$iconsole.log(this.props.)
+    selectAnswer : function(index) {
+        //var index = event.target.value;
+        console.log("SELECTING: " + index);
 
-
-        //alert(questionNum);
-        //quiz id
-        //question id
-        //answer chosen = answer_id
-        //user id
-        //alert("selected question")
-         //var selectedAnswer = this.refs.answersGroup.getCheckedValue();
-
-        var index = event.target.value;
-        var correct = (parseInt(index) === parseInt(this.props.question["correct_answer_id"]));
-        console.log(index  + " vs  " + this.props.question["correct_answer_id"]);
-        console.log(correct);
+        var newExplanations = this.props.question["answers"][index]["explanations"];
         this.setState ({
             selectedAnswer : index,
-            explanations : (React.createElement(ExplanationBoxComponent, {
-                explanations: this.props.question["answers"][index]["explanations"], 
-                correct: correct, 
-                onUpvoteOrExplanationAdded: this.onUpvoteOrExplanationAdded}))
         });
         console.log("adding explanations")
-        console.log(this.props.question["answers"][index]["explanations"]);
+        console.log(newExplanations);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
     },
 
 getAnswers : function() {
-//                 value={answers[i]['answer_id']}
     var listItems = [];
     var answers = this.props.question["answers"];
     for (var i = 1; i <= Object.keys(answers).length; i++) {
         var newAnswer = (
-            React.createElement("div", null, 
-            React.createElement("label", null, 
-                React.createElement("input", {type: "radio", 
-                 name: "answerButtons", 
-                 checked: this.state.selectedAnswer == i, 
-                 value: i, 
-                 onClick: this.selectAnswer}), 
-                    answers[i]["answer"]
-            )
-            ));
+            React.createElement(AnswerComponent, {
+                checked: this.state.selectedAnswer == i, 
+                correct: i === parseInt(this.props.question["correct_answer_id"]), 
+                answerID: i, 
+                onSelectAnswer: this.selectAnswer, 
+                answerStr: answers[i]["answer"]})
+           );
         listItems.push(newAnswer);
     }
     return listItems;
@@ -20202,63 +20269,52 @@ onNextButtonClicked : function() {
         return;
     } if (this.state.selectedAnswer) {
         this.setState({
-        errorMessage : "Please add a new explanation or upvote an existing one."
+        errorMessage : "Please add a new explanation or upvote an existing one!"
         });
     } else {
     this.setState({
-        errorMessage : "Please select an answer."
+        errorMessage : "Please select an answer!"
     });
 }
 },
 
 formSubmitted : function() {
     event.preventDefault(event);
-
+    dataStore.saveAttempt();
     // TODO: POPULATE newAttempt
-    var newAttempt = {};
-/*
-    var newAttempt = {
-        useremail: ,
-        quizID: 1,
-        questionID: this.props.questionNum,
-        answerID: this.state.selectedAnswer,
-        explanationWritten: ,
-        explanationVotedFor: ,
-        wasUpvote: ,
-    };
-*/
-    $.ajax({
-        url: '/submitanswer',
-        dataType: 'json',
-        type: 'POST',
-        data: newAttempt,
-        success: function(data) {
-            this.props.onNextButtonClicked();
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.log(err);
-        }.bind(this)
-    });
+
 },
 
 render: function() {
+
+    var correct = (this.state.selectedAnswer) ?
+        (parseInt(this.state.selectedAnswer) === parseInt(this.props.question["correct_answer_id"]))
+        : false;
+    var explanationBox = (this.state.selectedAnswer) ?
+        (React.createElement(ExplanationBoxComponent, {
+                explanations: this.props.question["answers"][this.state.selectedAnswer]["explanations"], 
+                correct: correct, 
+                questionID: this.props.questionNum, 
+                answerID: this.state.selectedAnswer, 
+                onUpvoteOrExplanationAdded: this.onUpvoteOrExplanationAdded})) : null;
+
     console.log("received data: ");
     console.log(this.props.question)
     return (
         React.createElement("div", null, 
         React.createElement("h2", null, this.props.question["question_str"]), 
-        React.createElement("form", {onSubmit: this.formSubmitted}, 
+        React.createElement("form", {onSubmit: this.formSubmitted, className: "answersForm"}, 
                 React.createElement("div", null, " ", this.getAnswers(), " ")
         ), 
-        this.state.explanations, 
-        React.createElement("input", {type: "button", value: "next", onClick: this.onNextButtonClicked}), 
-        React.createElement("div", null, this.state.errorMessage)
+        explanationBox, 
+        React.createElement("input", {type: "button", value: "next >", onClick: this.onNextButtonClicked}), 
+        React.createElement("div", {className: "errorMessage"}, this.state.errorMessage)
         )
         )
 }
 });
 
-},{"./explanationBox.jsx":161,"react":157}],163:[function(require,module,exports){
+},{"./answer.jsx":159,"./explanationBox.jsx":162,"react":157}],164:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",

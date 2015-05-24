@@ -39,12 +39,13 @@ emailChanged : function(event) {
 render: function() {
     return (
     <div>
-        <h1>Welcome to quizzr!</h1>
-        Enter your name and email address to get started with our quiz.
-         <form onSubmit={this.formSubmitted}>
+        <h1>Thanks for trying out quizzr!</h1>
+        <p>The following quiz covers some material we have seen in CS376 this quarter.
+        <br />Enter your name and email address to get started!</p>
+         <form onSubmit={this.formSubmitted} className="userFields">
             <div>
                 <label>
-                    <input type='text' placeholder='Your name' name='user_name'
+                    <input type='text' className="textInput" placeholder='Your name' name='user_name'
                     //value={this.state.name}
                     onChange={this.userNameChanged}
                     autoFocus={true} />
@@ -52,11 +53,11 @@ render: function() {
             </div>
             <div>
                 <label>
-                <input type='text' placeholder='email' name='email_address'
+                <input type='text' className="textInput" placeholder='email' name='email_address'
                     onChange={this.emailChanged}/>
                 </label>
             </div>
-        <input type='submit' value='next' disabled={!this.state.canContinue} onClick={this.formSubmitted} />
+        <input type='submit' value='next >' disabled={!this.state.canContinue} onClick={this.formSubmitted} />
         </form>
     </div>
     )

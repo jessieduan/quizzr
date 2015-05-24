@@ -104,14 +104,17 @@ render: function() {
             onClick={this.onTextAreaClicked}
             onChange={this.updateText}/>
             <div>
-                <input type='button' value='Add Suggestion' onClick={this.onExplanationSubmitted} />
+                <input type='button' className='addExplanationButton' value='Add Explanation' onClick={this.onExplanationSubmitted} />
             </div>
         </div>);
 
+    var explanations = this.getExplanationElems();
+    var explanationText = (explanations.length == 0) ? null : "Explanations from your classmates: ";
     return (
    <div>
+        {explanationText}
         <div className="ExplanationBox">
-            {this.getExplanationElems()}
+            {explanations}
             {addExplanationBox}
         </div>
     </div>

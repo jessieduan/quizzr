@@ -1,5 +1,7 @@
 var React = require('react');
 var ExplanationBoxComponent = require('./explanationBox.jsx');
+var AnswerComponent = require('./answer.jsx');
+
 
 module.exports = React.createClass({
 
@@ -31,8 +33,8 @@ module.exports = React.createClass({
         }
     },
 
-    selectAnswer : function(event) {
-        var index = event.target.value;
+    selectAnswer : function(index) {
+        //var index = event.target.value;
         console.log("SELECTING: " + index);
 
         var newExplanations = this.props.question["answers"][index]["explanations"];
@@ -49,16 +51,13 @@ getAnswers : function() {
     var answers = this.props.question["answers"];
     for (var i = 1; i <= Object.keys(answers).length; i++) {
         var newAnswer = (
-            <div>
-            <label>
-                <input type="radio"
-                 name="answerButtons"
-                 checked={this.state.selectedAnswer == i}
-                 value={i}
-                 onClick={this.selectAnswer} />
-                    {answers[i]["answer"]}
-            </label>
-            </div>);
+            <AnswerComponent
+                checked={this.state.selectedAnswer == i}
+                correct = {i === parseInt(this.props.question["correct_answer_id"])}
+                answerID={i}
+                onSelectAnswer={this.selectAnswer}
+                answerStr = {answers[i]["answer"]}/>
+           );
         listItems.push(newAnswer);
     }
     return listItems;
@@ -70,11 +69,11 @@ onNextButtonClicked : function() {
         return;
     } if (this.state.selectedAnswer) {
         this.setState({
-        errorMessage : "Please add a new explanation or upvote an existing one."
+        errorMessage : "Please add a new explanation or upvote an existing one!"
         });
     } else {
     this.setState({
-        errorMessage : "Please select an answer."
+        errorMessage : "Please select an answer!"
     });
 }
 },
@@ -104,12 +103,12 @@ render: function() {
     return (
         <div>
         <h2>{this.props.question["question_str"]}</h2>
-        <form onSubmit={this.formSubmitted}>
+        <form onSubmit={this.formSubmitted} className="answersForm">
                 <div> {this.getAnswers()} </div>
         </form>
         {explanationBox}
-        <input type='button' value='next' onClick={this.onNextButtonClicked} />
-        <div>{this.state.errorMessage}</div>
+        <input type='button' value='next >' onClick={this.onNextButtonClicked} />
+        <div className="errorMessage">{this.state.errorMessage}</div>
         </div>
         )
 }
