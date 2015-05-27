@@ -20316,26 +20316,25 @@ formSubmitted : function() {
 },
 
 render: function() {
-
+    var explanationsArray = (this.state.selectedAnswer) ? this.props.question["answers"][this.state.selectedAnswer]["explanations"] : [];
     var correct = (this.state.selectedAnswer) ?
         (parseInt(this.state.selectedAnswer) === parseInt(this.props.question["correct_answer_id"]))
         : false;
+    console.log("CORRECT: " + correct)
+    console.log("SELECTED: " + this.state.selectedAnswer)
     var experimentalExplanationBox = (this.state.selectedAnswer) ?
         (React.createElement(ExplanationBoxComponent, {
-                explanations: this.props.question["answers"][this.state.selectedAnswer]["explanations"], 
+                explanations: explanationsArray, 
                 correct: correct, 
                 questionID: this.props.questionNum, 
                 answerID: this.state.selectedAnswer, 
                 onUpvoteOrExplanationAdded: this.onUpvoteOrExplanationAdded})) : null;
 
-    var controlExplanationBox = (this.state.selectedAnswer) ?
-        (React.createElement("div", null, " ", this.props.question["answers"][this.state.selectedAnswer]["explanations"][0]["explanation"]))
-         : null;
-    //var explanationBox = (dataStore.isControl) ? controlExplanationBox : experimentalExplanationBox;
-    var explanationBox = (true) ? controlExplanationBox : experimentalExplanationBox;
+    var controlExplanationBox = (this.state.selectedAnswer && explanationsArray.length > 0) ?
+        (React.createElement("div", null, " ", explanationsArray[0]["explanation"])) : null;
+    var explanationBox = (dataStore.isControl) ? controlExplanationBox : experimentalExplanationBox;
+    //var explanationBox = (true) ? controlExplanationBox : experimentalExplanationBox;
 
-    console.log("received data: ");
-    console.log(this.props.question)
     return (
         React.createElement("div", null, 
         React.createElement("h2", null, this.props.question["question_str"]), 
