@@ -7,8 +7,7 @@ var quizData = allQuizData[0];
 
 function DataStore (data) {
     this.quizData = data;
-    //this.userEmail = "";
-    this.userEmail = "melj@stanford.edu"; // COMMENT BACK
+    this.userEmail = "";
     this.attempts = {};
 
     this.getQuizData = function() {
@@ -55,11 +54,12 @@ function DataStore (data) {
         this.render();
     };
 
-    this.saveNewUser = function(userName, email) {
+    this.saveNewUser = function(userName, email, isControl) {
         this.userEmail = email;
         var newUser = {
             username: userName,
-            useremail: email
+            useremail: email,
+            isControl: isControl
         };
 
         $.ajax({
@@ -81,7 +81,7 @@ function DataStore (data) {
         this.attempts[questionID]['upvotedExplanations'] = JSON.stringify(this.attempts[questionID]['upvotedExplanations']);
         this.attempts[questionID]['downvotedExplanations'] = JSON.stringify(this.attempts[questionID]['downvotedExplanations']);
 
-        console.log("SAVING ATTEMPT");
+        console.log("SAVING ATTEMPT:");
         console.log(this.attempts[questionID]);
 
         $.ajax({
@@ -19888,7 +19888,7 @@ module.exports = React.createClass({displayName: "exports",
 
    getInitialState : function() {
     return {
-      questionNum : 1, //TODO JESSIE: return to 0
+      questionNum : 0,
       currQuestionData : {}
     };
     },
@@ -19973,6 +19973,7 @@ getInitialState : function() {
         return {
             userName : undefined,
             emailAddress  : undefined,
+            isControl : undefined,
             canContinue : false,
         };
     },
@@ -19983,9 +19984,14 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
+    var isControl = Math.random() > 0.5;
+    this.setState ({
+        isControl: isControl
+    });
     dataStore.saveNewUser(
         this.state.userName,
-        this.state.emailAddress);
+        this.state.emailAddress,
+        isControl);
     this.props.onNextButtonClicked();
 },
 

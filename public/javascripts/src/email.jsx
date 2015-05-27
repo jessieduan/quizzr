@@ -5,6 +5,7 @@ getInitialState : function() {
         return {
             userName : undefined,
             emailAddress  : undefined,
+            isControl : undefined,
             canContinue : false,
         };
     },
@@ -15,9 +16,14 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
+    var isControl = Math.random() > 0.7;
+    this.setState ({
+        isControl: isControl
+    });
     dataStore.saveNewUser(
         this.state.userName,
-        this.state.emailAddress);
+        this.state.emailAddress,
+        isControl);
     this.props.onNextButtonClicked();
 },
 

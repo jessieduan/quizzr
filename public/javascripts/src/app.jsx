@@ -53,11 +53,12 @@ function DataStore (data) {
         this.render();
     };
 
-    this.saveNewUser = function(userName, email) {
+    this.saveNewUser = function(userName, email, isControl) {
         this.userEmail = email;
         var newUser = {
             username: userName,
-            useremail: email
+            useremail: email,
+            isControl: isControl
         };
 
         $.ajax({

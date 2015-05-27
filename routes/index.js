@@ -129,6 +129,7 @@ router.post('/adduser', function(req, res) {
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.useremail;
+    var isControl = req.body.isControl;
 
     // Set our collection
     var collection = db.get('users');
@@ -138,7 +139,7 @@ router.post('/adduser', function(req, res) {
     collection.insert({
         "name" : userName,
         "email" : userEmail,
-        "is_control": Math.random() > 0.5,
+        "is_control": isControl,
         "quizzes_taken": {
             "1": {
                 "time_started": Date.now(),
