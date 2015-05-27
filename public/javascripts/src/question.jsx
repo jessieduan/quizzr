@@ -48,11 +48,21 @@ getAnswers : function() {
     var listItems = [];
     var answers = this.props.question["answers"];
     for (var i = 1; i <= Object.keys(answers).length; i++) {
+        var correct = i === parseInt(this.props.question["correct_answer_id"]);
+        var selected = this.state.selectedAnswer == i;
+        var labelID = "";
+        if (selected && !correct) {
+            labelID = "incorrectlySelectedLabel";
+        } else if (correct && this.state.selectedAnswer != undefined) {
+            labelID = "correctlySelectedLabel";
+        }
         var newAnswer = (
             <AnswerComponent
-                checked={this.state.selectedAnswer == i}
-                correct = {i === parseInt(this.props.question["correct_answer_id"])}
+                checked={selected}
+                correct = {correct}
+                disabled = {this.state.selectedAnswer != undefined}
                 answerID={i}
+                labelID={labelID}
                 onSelectAnswer={this.selectAnswer}
                 answerStr = {answers[i]["answer"]}/>
            );
@@ -86,13 +96,19 @@ render: function() {
     var correct = (this.state.selectedAnswer) ?
         (parseInt(this.state.selectedAnswer) === parseInt(this.props.question["correct_answer_id"]))
         : false;
-    var explanationBox = (this.state.selectedAnswer) ?
+    var experimentalExplanationBox = (this.state.selectedAnswer) ?
         (<ExplanationBoxComponent
                 explanations={this.props.question["answers"][this.state.selectedAnswer]["explanations"]}
                 correct={correct}
                 questionID={this.props.questionNum}
                 answerID={this.state.selectedAnswer}
                 onUpvoteOrExplanationAdded = {this.onUpvoteOrExplanationAdded} />) : null;
+
+    var controlExplanationBox = (this.state.selectedAnswer) ?
+        (<div> {this.props.question["answers"][this.state.selectedAnswer]["explanations"][0]["explanation"]}</div>)
+         : null;
+    var explanationBox = (dataStore.isControl) ? controlExplanationBox : experimentalExplanationBox;
+    //var explanationBox = (true) ? controlExplanationBox : experimentalExplanationBox;
 
     console.log("received data: ");
     console.log(this.props.question)

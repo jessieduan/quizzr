@@ -9,6 +9,7 @@ function DataStore (data) {
     this.quizData = data;
     this.userEmail = "";
     this.attempts = {};
+    this.isControl = false;
 
     this.getQuizData = function() {
         return this.quizData;
@@ -61,6 +62,8 @@ function DataStore (data) {
             useremail: email,
             isControl: isControl
         };
+
+        this.isControl = isControl;
 
         $.ajax({
             url: '/adduser',
@@ -19954,12 +19957,14 @@ module.exports = React.createClass({displayName: "exports",
                  name: "answerButtons", 
                  id: "label_" + this.props.answerID, 
                  checked: this.props.checked, 
+                 disabled: this.props.disabled, 
                  value: this.props.answerID, 
                  onClick: this.onSelectAnswer}), 
                  React.createElement("label", {htmlFor: "label_" + this.props.answerID, 
-                    className: this.props.correct ? "correctLabel" : "incorrectLabel"}, 
+                    className: this.props.correct ? "correctLabel" : "incorrectLabel", 
+                    id: this.props.labelID}, 
                 this.props.answerStr
-            )
+                )
             )
     );
 }
@@ -19984,7 +19989,7 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
-    var isControl = Math.random() > 0.5;
+    var isControl = Math.random() > 0.7;
     this.setState ({
         isControl: isControl
     });
@@ -20184,7 +20189,6 @@ getExplanationElems : function() {
 },
 
 render: function() {
-    console.log("here in explanationBox");
     var incorrectStr = "Write an explanation for why the answer you chose is incorrect."
     var correctStr = "How did you know that this was the right answer?"
     console.log(this.props.correct);
@@ -20268,11 +20272,21 @@ getAnswers : function() {
     var listItems = [];
     var answers = this.props.question["answers"];
     for (var i = 1; i <= Object.keys(answers).length; i++) {
+        var correct = i === parseInt(this.props.question["correct_answer_id"]);
+        var selected = this.state.selectedAnswer == i;
+        var labelID = "";
+        if (selected && !correct) {
+            labelID = "incorrectlySelectedLabel";
+        } else if (correct && this.state.selectedAnswer != undefined) {
+            labelID = "correctlySelectedLabel";
+        }
         var newAnswer = (
             React.createElement(AnswerComponent, {
-                checked: this.state.selectedAnswer == i, 
-                correct: i === parseInt(this.props.question["correct_answer_id"]), 
+                checked: selected, 
+                correct: correct, 
+                disabled: this.state.selectedAnswer != undefined, 
                 answerID: i, 
+                labelID: labelID, 
                 onSelectAnswer: this.selectAnswer, 
                 answerStr: answers[i]["answer"]})
            );
@@ -20306,13 +20320,19 @@ render: function() {
     var correct = (this.state.selectedAnswer) ?
         (parseInt(this.state.selectedAnswer) === parseInt(this.props.question["correct_answer_id"]))
         : false;
-    var explanationBox = (this.state.selectedAnswer) ?
+    var experimentalExplanationBox = (this.state.selectedAnswer) ?
         (React.createElement(ExplanationBoxComponent, {
                 explanations: this.props.question["answers"][this.state.selectedAnswer]["explanations"], 
                 correct: correct, 
                 questionID: this.props.questionNum, 
                 answerID: this.state.selectedAnswer, 
                 onUpvoteOrExplanationAdded: this.onUpvoteOrExplanationAdded})) : null;
+
+    var controlExplanationBox = (this.state.selectedAnswer) ?
+        (React.createElement("div", null, " ", this.props.question["answers"][this.state.selectedAnswer]["explanations"][0]["explanation"]))
+         : null;
+    //var explanationBox = (dataStore.isControl) ? controlExplanationBox : experimentalExplanationBox;
+    var explanationBox = (true) ? controlExplanationBox : experimentalExplanationBox;
 
     console.log("received data: ");
     console.log(this.props.question)

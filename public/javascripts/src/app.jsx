@@ -8,6 +8,7 @@ function DataStore (data) {
     this.quizData = data;
     this.userEmail = "";
     this.attempts = {};
+    this.isControl = false;
 
     this.getQuizData = function() {
         return this.quizData;
@@ -60,6 +61,8 @@ function DataStore (data) {
             useremail: email,
             isControl: isControl
         };
+
+        this.isControl = isControl;
 
         $.ajax({
             url: '/adduser',

@@ -89,7 +89,6 @@ getExplanationElems : function() {
 },
 
 render: function() {
-    console.log("here in explanationBox");
     var incorrectStr = "Write an explanation for why the answer you chose is incorrect."
     var correctStr = "How did you know that this was the right answer?"
     console.log(this.props.correct);

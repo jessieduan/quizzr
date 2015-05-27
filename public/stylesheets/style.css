@@ -56,6 +56,13 @@ a {
     width: 50%;
 }
 
+#correctlySelectedLabel {
+    color: green;
+}
+
+#incorrectlySelectedLabel {
+  color: red;
+}
 
 .correctLabel, .incorrectLabel{
     display: inline-block;
@@ -198,11 +205,11 @@ input[type=radio] + label {
   cursor: pointer;
 }
 
-input[type=radio] + label:hover {
+input[type=radio]:enabled + label:hover {
   color : #47167A;
 }
 
-input[type=radio] + label:hover::before {
+input[type=radio]:enabled + label:hover::before {
   width: 35px;
   height: 35px;
   left: -40px;
@@ -231,7 +238,7 @@ input[type=radio] + label::before {
   border-radius: 25px;
 }
 
-input[type=radio]:checked + label:hover::before {
+input[type=radio]:checked::enabled + label:hover::before {
   position: absolute;
   left: -35px;
   top: -3px;

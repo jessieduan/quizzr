@@ -13,12 +13,14 @@ module.exports = React.createClass({
                  name="answerButtons"
                  id={"label_" + this.props.answerID}
                  checked={this.props.checked}
+                 disabled = {this.props.disabled}
                  value={this.props.answerID}
                  onClick = {this.onSelectAnswer} />
                  <label htmlFor={"label_" + this.props.answerID}
-                    className={this.props.correct ? "correctLabel" : "incorrectLabel"}>
+                    className={this.props.correct ? "correctLabel" : "incorrectLabel"}
+                    id={this.props.labelID}>
                 {this.props.answerStr}
-            </label>
+                </label>
             </div>
     );
 }
