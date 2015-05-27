@@ -19984,7 +19984,7 @@ doAlert: function() {
 
 formSubmitted : function(form) {
     event.preventDefault(event);
-    var isControl = Math.random() > 0.5;
+    var isControl = Math.random() > 0.7;
     this.setState ({
         isControl: isControl
     });
@@ -20204,10 +20204,10 @@ render: function() {
         ));
 
     var explanations = this.getExplanationElems();
-    var explanationText = (explanations.length == 0) ? null : "Explanations from your classmates: ";
+    var explanationText = (explanations.length == 0) ? null : "Please upvote/downvote explanations from your classmates, or write your own answer: ";
     return (
    React.createElement("div", null, 
-        explanationText, 
+        React.createElement("i", null, explanationText), 
         React.createElement("div", {className: "ExplanationBox"}, 
             explanations, 
             addExplanationBox
@@ -20322,6 +20322,7 @@ render: function() {
         React.createElement("form", {onSubmit: this.formSubmitted, className: "answersForm"}, 
                 React.createElement("div", null, " ", this.getAnswers(), " ")
         ), 
+        React.createElement("br", null), 
         explanationBox, 
         React.createElement("input", {type: "button", value: "next >", onClick: this.onNextButtonClicked}), 
         React.createElement("div", {className: "errorMessage"}, this.state.errorMessage)
