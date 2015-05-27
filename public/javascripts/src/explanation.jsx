@@ -14,6 +14,7 @@ saveVote : function(value) {
     if (this.state.voted) {
         return;
     }
+    this.props.onVote();
     this.setState ({
         voted : true
     });

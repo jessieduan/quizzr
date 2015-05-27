@@ -35,14 +35,12 @@ module.exports = React.createClass({
 
     selectAnswer : function(index) {
         //var index = event.target.value;
-        console.log("SELECTING: " + index);
 
         var newExplanations = this.props.question["answers"][index]["explanations"];
         this.setState ({
             selectedAnswer : index,
         });
-        console.log("adding explanations")
-        console.log(newExplanations);
+        dataStore.selectAnswer(this.props.questionNum, index);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
     },
 
@@ -66,6 +64,7 @@ getAnswers : function() {
 onNextButtonClicked : function() {
     if (this.state.canContinue) {
         this.props.onNextButtonClicked();
+        dataStore.saveAttempt(this.props.questionNum);
         return;
     } if (this.state.selectedAnswer) {
         this.setState({
@@ -80,9 +79,6 @@ onNextButtonClicked : function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-    dataStore.saveAttempt();
-    // TODO: POPULATE newAttempt
-
 },
 
 render: function() {

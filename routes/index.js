@@ -35,67 +35,86 @@ router.get('/newuser', function(req, res) {
 
 /* POST when question answer is submitted */
 router.post('/submitanswer', function(req, res) {
-
     // Set our internal DB variable
     var db = req.db;
+    var quizCollection = db.get('quizzes');
+    var userCollection = db.get('users');
 
+    console.log(req.body);
     // Get our form values. These rely on the "name" attributes
-    var userEmail = req.body.useremail;
-    var quizID = req.body.quizID;
+    var userEmail = req.body.userEmail;
+    var quizID = 1;
     var questionID = req.body.questionID;
     var answerID = req.body.answerID;
-    var explanationWritten = req.body.explanationWritten; // or none exists
-    var explanationVotedFor = req.body.explanationVotedFor; // or none exists
-    var wasUpvote = req.body.wasUpvote; // or none exists
-
-    var explanationWrittenID = -1;
-
-    var quiz = db.quizzes.findOne({ quiz_id: quizID });
-    var isCorrect = (answerID == quiz["" + questionID]["correct_answer_id"]);
+    var explanation = req.body.explanationWritten;
+    var upvotedExplanations = JSON.parse(req.body.upvotedExplanations); // or none exists
+    var downvotedExplanations = JSON.parse(req.body.downvotedExplanations); // or none exists
 
     // HACKS ON HACKS ON HACKS - can't use $push, so we resort to manually updating collections instead
     // add explanation
-    if (explanationWritten) {
-        db.quizzes.find({ quiz_id: quizID }).forEach(function (doc) {
-            var explanations = doc["questions"]["" + questionID]["answers"]["" + answerID]["explanations"];
-            explanationWrittenID = explanations.length + 1;
-            explanations.push({
-                "explanation_id": explanationWrittenID,
-                "explanation": explanationWritten,
-                "upvotes": 0
-            });
-            db.quizzes.save(doc, function (err, doc) {
-                if (err) res.send("There was a problem adding the information to the database.");
-            });
-        });
-    }
+    quizCollection.findOne({ quiz_id: 1 }, function (err, quiz) {
+        var isCorrect = (answerID == quiz['questions']['' + questionID]["correct_answer_id"]);
 
-    // update upvotes for explanation
-    if (explanationVotedFor) {
-        // TODO
-    }
-
-    // update users with user attempt
-    db.users.find({ email: userEmail }).forEach(function (user) {
-        user["quizzes_taken"]["" + quizID]["attempts"].push({
+        var newAttempt = {
             "question_id": questionID,
             "is_correct": isCorrect,
             "answer_given": answerID,
-            "upvoted_explanation": explanationVotedFor,
-            "wrote_explanation": explanationWrittenID
-        });
+            "upvoted_explanations": upvotedExplanations,
+            "downvoted_explanations": downvotedExplanations
+        };
 
-        // HACK - everyone will get to this point if there's no previous error, so it's ok to alter state based on success of this one call.
-        db.users.save(user, function (err, doc) {
-            if (err) {
-                // If it failed, return error
-                res.send("There was a problem adding the information to the database.");
-            } else {
-                // If it worked, set the header so the address bar doesn't still say /adduser
-                // res.location("mongotest");
-                // And forward to success page
-                // res.redirect("mongotest");
+        if (explanation || upvotedExplanations || downvotedExplanations) {
+            var explanations = quiz["questions"]["" + questionID]["answers"]["" + answerID]["explanations"];
+
+            if (explanation) {
+                explanation = JSON.parse(explanation);
+                explanations.push(explanation);
+                newAttempt['explanation_written'] = explanation['explanation'];
+                newAttempt['wrote_explanation'] = explanation['explanation_id'];
             }
+            if (upvotedExplanations) {
+                for (var i = 0; i < upvotedExplanations.length; i++) {
+                    // HACK - b/c 1-indexed
+                    explanations[upvotedExplanations[i] - 1]['upvotes'] += 1;
+                }
+            }
+            if (downvotedExplanations) {
+                console.log(explanations);
+                for (var j = 0; j < downvotedExplanations.length; j++) {
+                    explanations[downvotedExplanations[j] - 1]['upvotes'] -= 1;
+                }
+                console.log(explanations);
+            }
+
+            quizCollection.update({ quiz_id: 1 }, quiz, function (err, doc) {
+                if (err) res.send("There was a problem adding the information to the database.");
+            });
+        }
+
+
+        // TODO: UPDATE UPVOTED_EXPLANATIONS/DOWNVOTED_EXPLANATIONS
+        // update users with user attempt
+        userCollection.findOne({ email: userEmail }, function(userErr, user) {
+            if (userErr) {
+                console.log(userErr);
+                return;
+            }
+
+            user["quizzes_taken"]["" + quizID]["attempts"].push(newAttempt);
+
+            userCollection.update({ email: userEmail }, user, function(saveErr, doc) {
+                if (saveErr) {
+                    // If it failed, return error
+                    console.log(saveErr);
+                    res.send("There was a problem adding the information to the database.");
+                } else {
+                    console.log("success!");
+                    // If it worked, set the header so the address bar doesn't still say /adduser
+                    // res.location("mongotest");
+                    // And forward to success page
+                    // res.redirect("mongotest");
+                }
+            });
         });
     });
 

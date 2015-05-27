@@ -2,16 +2,18 @@
 var React = require('react');
 var HelloWorld = require('./HelloWorld.jsx');
 
-var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML)
+var allQuizData = JSON.parse(document.getElementById('quiz-data').innerHTML);
 var quizData = allQuizData[0];
 
 function DataStore (data) {
     this.quizData = data;
-    this.userEmail = "";
+    //this.userEmail = "";
+    this.userEmail = "melj@stanford.edu"; // COMMENT BACK
+    this.attempts = {};
 
     this.getQuizData = function() {
         return this.quizData;
-    }
+    };
 
     this.render = function() {
         React.render(
@@ -19,13 +21,30 @@ function DataStore (data) {
             document.getElementById('example')
         );
     };
+
+    this.selectAnswer = function(questionID, answerID) {
+        console.log("selectAnswer questionID: " + questionID);
+        if (!(questionID in this.attempts)) {
+            this.attempts[questionID] = {};
+            this.attempts[questionID]["userEmail"] = this.userEmail;
+            this.attempts[questionID]["questionID"] = parseInt(questionID);
+            this.attempts[questionID]["upvotedExplanations"] = [];
+            this.attempts[questionID]["downvotedExplanations"] = [];
+        }
+        this.attempts[questionID]["answerID"] = parseInt(answerID);
+    };
+
     this.addExplanation = function(questionID, answerID, explanation) {
+        this.attempts[questionID]["explanationWritten"] = JSON.stringify(explanation);
         this.quizData['questions'][questionID]['answers'][answerID]['explanations'].push(explanation);
         this.render();
     };
 
     this.addVote = function(questionID, answerID, explanationID, value) {
         //value should either be 1 (for upvote) or -1 (for downvote)
+        if (value == 1) this.attempts[questionID]["upvotedExplanations"].push(explanationID);
+        else this.attempts[questionID]["downvotedExplanations"].push(explanationID);
+
         var explanations = this.quizData['questions'][questionID]['answers'][answerID]['explanations'];
         for (var i = 0; i < explanations.length; i++) {
             var explanation = explanations[i];
@@ -59,23 +78,17 @@ function DataStore (data) {
     };
 
     this.saveAttempt = function(questionID) {
-        var newAttempt = {};
-        /*
-        var newAttempt = {
-            useremail: this.useremail,
-            quizID: 1,
-            questionID: questionID,
-            answerID: this.state.selectedAnswer,
-            explanationWritten: ,
-            explanationVotedFor: ,
-            wasUpvote: ,
-        };*/
+        this.attempts[questionID]['upvotedExplanations'] = JSON.stringify(this.attempts[questionID]['upvotedExplanations']);
+        this.attempts[questionID]['downvotedExplanations'] = JSON.stringify(this.attempts[questionID]['downvotedExplanations']);
+
+        console.log("SAVING ATTEMPT");
+        console.log(this.attempts[questionID]);
 
         $.ajax({
             url: '/submitanswer',
             dataType: 'json',
             type: 'POST',
-            data: newAttempt,
+            data: this.attempts[questionID],
             success: function(data) {
                 console.log("success");
             }.bind(this),
@@ -19875,7 +19888,7 @@ module.exports = React.createClass({displayName: "exports",
 
    getInitialState : function() {
     return {
-      questionNum : 0,
+      questionNum : 1, //TODO JESSIE: return to 0
       currQuestionData : {}
     };
     },
@@ -20036,6 +20049,7 @@ saveVote : function(value) {
     if (this.state.voted) {
         return;
     }
+    this.props.onVote();
     this.setState ({
         voted : true
     });
@@ -20235,14 +20249,12 @@ module.exports = React.createClass({displayName: "exports",
 
     selectAnswer : function(index) {
         //var index = event.target.value;
-        console.log("SELECTING: " + index);
 
         var newExplanations = this.props.question["answers"][index]["explanations"];
         this.setState ({
             selectedAnswer : index,
         });
-        console.log("adding explanations")
-        console.log(newExplanations);
+        dataStore.selectAnswer(this.props.questionNum, index);
         this.props.onAnswerSelected(this.props.question["answers"][index]);
     },
 
@@ -20266,6 +20278,7 @@ getAnswers : function() {
 onNextButtonClicked : function() {
     if (this.state.canContinue) {
         this.props.onNextButtonClicked();
+        dataStore.saveAttempt(this.props.questionNum);
         return;
     } if (this.state.selectedAnswer) {
         this.setState({
@@ -20280,9 +20293,6 @@ onNextButtonClicked : function() {
 
 formSubmitted : function() {
     event.preventDefault(event);
-    dataStore.saveAttempt();
-    // TODO: POPULATE newAttempt
-
 },
 
 render: function() {

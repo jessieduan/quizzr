@@ -112,14 +112,16 @@ db.users.insert([
                 "question_id": 1,
                 "is_correct": false,
                 "answer_given": 2,
-                "upvoted_explanation": 1,
+                "upvoted_explanations": [1],
+                "downvoted_explanations": [],
                 "wrote_explanation": 2
             },
             {
                 "question_id": 2,
                 "is_correct": true,
                 "answer_given": 1,
-                "upvoted_explanation": 1,
+                "upvoted_explanations": [1],
+                "downvoted_explanations": [],
                 "wrote_explanation": 2
             }]
         },
@@ -146,5 +148,10 @@ db.users.insert([
     "name": "Jessie Duan",
     "email": "jduan1@stanford.edu",
     "is_control": false,
-    "quizzes_taken": {}
+    "quizzes_taken": {
+        "1": {
+            "time_started": date2,
+            "attempts": []
+        }
+    }
 }]);
