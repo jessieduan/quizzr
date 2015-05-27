@@ -118,6 +118,7 @@ render: function() {
         <form onSubmit={this.formSubmitted} className="answersForm">
                 <div> {this.getAnswers()} </div>
         </form>
+        <br/>
         {explanationBox}
         <input type='button' value='next >' onClick={this.onNextButtonClicked} />
         <div className="errorMessage">{this.state.errorMessage}</div>

@@ -108,10 +108,10 @@ render: function() {
         </div>);
 
     var explanations = this.getExplanationElems();
-    var explanationText = (explanations.length == 0) ? null : "Explanations from your classmates: ";
+    var explanationText = (explanations.length == 0) ? null : "Please upvote/downvote explanations from your classmates, or write your own answer: ";
     return (
    <div>
-        {explanationText}
+        <i>{explanationText}</i>
         <div className="ExplanationBox">
             {explanations}
             {addExplanationBox}
