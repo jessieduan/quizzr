@@ -17,6 +17,16 @@ a {
   color: #00B7FF;
 }
 
+.surveyTextArea {
+  width: 570px;
+  height:60px;
+  margin-bottom:20px;
+}
+
+.surveyExplanation {
+  margin-bottom:20px;
+}
+
 .userFields {
   margin-top:20px;
   margin-bottom:20px;

@@ -62,6 +62,7 @@ function DataStore (data) {
             isControl: isControl
         };
 
+        console.log("CONTROL: " + this.isControl);
         this.isControl = isControl;
 
         $.ajax({
@@ -99,6 +100,17 @@ function DataStore (data) {
             }.bind(this)
         });
     };
+
+    this.saveSurvey = function(surveyDict) {
+        console.log(surveyDict);
+        // surveyDict is in this format:
+        // {
+        // "1" : "answer to 1",
+        // "2" : "answer to 2",
+        // "3" : "answer to 3",
+        // "4" : "answer to 4",
+        // };
+    }
 
     this.addAttempt = function() {
         this.render();

@@ -63,6 +63,7 @@ function DataStore (data) {
             isControl: isControl
         };
 
+        console.log("CONTROL: " + this.isControl);
         this.isControl = isControl;
 
         $.ajax({
@@ -100,6 +101,17 @@ function DataStore (data) {
             }.bind(this)
         });
     };
+
+    this.saveSurvey = function(surveyDict) {
+        console.log(surveyDict);
+        // surveyDict is in this format:
+        // {
+        // "1" : "answer to 1",
+        // "2" : "answer to 2",
+        // "3" : "answer to 3",
+        // "4" : "answer to 4",
+        // };
+    }
 
     this.addAttempt = function() {
         this.render();
@@ -20234,14 +20246,14 @@ module.exports = React.createClass({displayName: "exports",
         return {
             selectedAnswer : undefined,
             explanations : null,
-            canContinue : false,
+            upvoteOrExp : false,
             errorMessage : null,
         };
     },
 
     onUpvoteOrExplanationAdded : function() {
         this.setState({
-            canContinue : true,
+            upvoteOrExp : true,
             errorMessage : null,
         });
     },
@@ -20251,7 +20263,7 @@ module.exports = React.createClass({displayName: "exports",
             this.setState({
                 selectedAnswer : undefined,
                 explanations : null,
-                canContinue : false,
+                upvoteOrExp : false,
                 errorMessage : null,
             });
         }
@@ -20296,11 +20308,11 @@ getAnswers : function() {
 },
 
 onNextButtonClicked : function() {
-    if (this.state.canContinue) {
+    if (this.state.upvoteOrExp || (this.state.selectedAnswer && dataStore.isControl)) {
         this.props.onNextButtonClicked();
         dataStore.saveAttempt(this.props.questionNum);
         return;
-    } if (this.state.selectedAnswer) {
+    } if (this.state.selectedAnswer && !dataStore.isControl) {
         this.setState({
         errorMessage : "Please add a new explanation or upvote an existing one!"
         });
@@ -20355,12 +20367,104 @@ var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
 
+getInitialState : function() {
+    return {
+      finishedSurvey : false,
+    };
+},
+
+onSubmitForm : function() {
+  this.setState ({
+        finishedSurvey : true,
+    });
+  var surveyAnswers = {
+    "1" : this.state.question1,
+    "2" : this.state.question2,
+    "3" : this.state.question3,
+    "4" : this.state.question4,
+  };
+  dataStore.saveSurvey(surveyAnswers);
+},
+
+updateQuestion1 : function(event) {
+    this.setState({
+        question1 : event.target.value,
+    })
+},
+
+updateQuestion2: function(event) {
+    this.setState({
+        question2 : event.target.value,
+    })
+},
+
+updateQuestion3 : function(event) {
+    this.setState({
+        question3 : event.target.value,
+    })
+},
+
+updateQuestion4 : function(event) {
+    this.setState({
+        question4 : event.target.value,
+    })
+},
+
 render: function() {
+    var survey =
+    (React.createElement("div", null, 
+        React.createElement("form", null, 
+            React.createElement("div", null, 
+                React.createElement("div", null, 
+                    "Did you find the explanations from other students to be helpful in understanding the answer?"
+                ), 
+                React.createElement("textarea", {
+                    className: "surveyTextArea", 
+                    onChange: this.updateQuestion1})
+            ), 
+            React.createElement("div", null, 
+                React.createElement("div", null, 
+                    "Overall, did you feel that this system could enhance your learning as compared to a standard online quiz?"
+                ), 
+                React.createElement("textarea", {
+                    className: "surveyTextArea", 
+                    onChange: this.updateQuestion2})
+            ), 
+             React.createElement("div", null, 
+                React.createElement("div", null, 
+                    "What did you like and dislike about this system?"
+                ), 
+                React.createElement("textarea", {
+                    className: "surveyTextArea", 
+                    onChange: this.updateQuestion3})
+            ), 
+             React.createElement("div", null, 
+                React.createElement("div", null, 
+                    "Any other comments?"
+                ), 
+                React.createElement("textarea", {
+                    className: "surveyTextArea", 
+                    onChange: this.updateQuestion4})
+            ), 
+            React.createElement("input", {type: "button", className: "submitSurvey", value: "Submit", onClick: this.onSubmitForm})
+        )
+    ));
+
+    if (!dataStore.isControl && !this.state.finishedSurvey) {
+        return (
+            React.createElement("div", null, 
+                React.createElement("h1", null, "Quiz complete!"), 
+                React.createElement("div", {className: "surveyExplanation"}, " Please take a minute to answer the following questions: "), 
+                    survey
+            )
+        );
+    }
+
     return (
-    React.createElement("div", null, 
-        React.createElement("h1", null, "Thanks for completing this quiz!")
-    )
-    )
+        React.createElement("div", null, 
+            React.createElement("h1", null, "Thanks for completing this quiz!")
+        )
+    );
 }
 });
 

@@ -10,14 +10,14 @@ module.exports = React.createClass({
         return {
             selectedAnswer : undefined,
             explanations : null,
-            canContinue : false,
+            upvoteOrExp : false,
             errorMessage : null,
         };
     },
 
     onUpvoteOrExplanationAdded : function() {
         this.setState({
-            canContinue : true,
+            upvoteOrExp : true,
             errorMessage : null,
         });
     },
@@ -27,7 +27,7 @@ module.exports = React.createClass({
             this.setState({
                 selectedAnswer : undefined,
                 explanations : null,
-                canContinue : false,
+                upvoteOrExp : false,
                 errorMessage : null,
             });
         }
@@ -72,11 +72,11 @@ getAnswers : function() {
 },
 
 onNextButtonClicked : function() {
-    if (this.state.canContinue) {
+    if (this.state.upvoteOrExp || (this.state.selectedAnswer && dataStore.isControl)) {
         this.props.onNextButtonClicked();
         dataStore.saveAttempt(this.props.questionNum);
         return;
-    } if (this.state.selectedAnswer) {
+    } if (this.state.selectedAnswer && !dataStore.isControl) {
         this.setState({
         errorMessage : "Please add a new explanation or upvote an existing one!"
         });
