@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mongo quizzr --eval "db.dropDatabase();"
+mongo quizzr --eval "db.quizzes.drop();"

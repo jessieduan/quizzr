@@ -15,7 +15,7 @@ var users = require('./routes/users');
 var mongotest = require('./routes/mongotest');
 
 var app = express();
-//app.listen(80);
+app.listen(80);
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
