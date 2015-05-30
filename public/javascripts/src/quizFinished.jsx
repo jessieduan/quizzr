@@ -46,51 +46,49 @@ updateQuestion4 : function(event) {
 },
 
 render: function() {
-    var survey =
-    (<div>
-        <form>
-            <div>
-                <div>
-                    Did you find the explanations from other students to be helpful in understanding the answer?
-                </div>
-                <textarea
-                    className="surveyTextArea"
-                    onChange={this.updateQuestion1}/>
-            </div>
-            <div>
-                <div>
-                    Overall, did you feel that this system could enhance your learning as compared to a standard online quiz?
-                </div>
-                <textarea
-                    className="surveyTextArea"
-                    onChange={this.updateQuestion2}/>
-            </div>
-             <div>
-                <div>
-                    What did you like and dislike about this system?
-                </div>
-                <textarea
-                    className="surveyTextArea"
-                    onChange={this.updateQuestion3}/>
-            </div>
-             <div>
-                <div>
-                    Any other comments?
-                </div>
-                <textarea
-                    className="surveyTextArea"
-                    onChange={this.updateQuestion4}/>
-            </div>
-            <input type='button' className='submitSurvey' value='Submit' onClick={this.onSubmitForm}/>
-        </form>
-    </div>);
+    // var survey =
+    // (<div>
+    //     <form>
+    //         <div>
+    //             <div>
+    //                 Did you find the explanations from other students to be helpful in understanding the answer?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion1}/>
+    //         </div>
+    //         <div>
+    //             <div>
+    //                 Overall, did you feel that this system could enhance your learning as compared to a standard online quiz?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion2}/>
+    //         </div>
+    //          <div>
+    //             <div>
+    //                 What did you like and dislike about this system?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion3}/>
+    //         </div>
+    //          <div>
+    //             <div>
+    //                 Any other comments?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion4}/>
+    //         </div>
+    //         <input type='button' className='submitSurvey' value='Submit' onClick={this.onSubmitForm}/>
+    //     </form>
+    // </div>);
 
     if (!dataStore.isControl && !this.state.finishedSurvey) {
         return (
-            <div>
-                <h1>Quiz complete!</h1>
-                <div className="surveyExplanation"> Please take a minute to answer the following questions: </div>
-                    {survey}
+            <div className="googleForm">
+                <iframe src="https://docs.google.com/forms/d/1jGaI__9Z2HpLsvpb_jMxo6gcknl8mkRmLIyJfxca_50/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
             </div>
         );
     }

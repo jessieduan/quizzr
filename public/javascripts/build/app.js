@@ -19938,6 +19938,12 @@ getCurrentComponent : function() {
 
 advanceQuestion : function() {
     //console.log(this.props.)
+    if (this.state.questionNum == 0) {
+       this.setState ({
+        questionNum : 10,
+    });
+    }
+
     this.setState ({
         questionNum : this.state.questionNum + 1,
     });
@@ -20411,51 +20417,49 @@ updateQuestion4 : function(event) {
 },
 
 render: function() {
-    var survey =
-    (React.createElement("div", null, 
-        React.createElement("form", null, 
-            React.createElement("div", null, 
-                React.createElement("div", null, 
-                    "Did you find the explanations from other students to be helpful in understanding the answer?"
-                ), 
-                React.createElement("textarea", {
-                    className: "surveyTextArea", 
-                    onChange: this.updateQuestion1})
-            ), 
-            React.createElement("div", null, 
-                React.createElement("div", null, 
-                    "Overall, did you feel that this system could enhance your learning as compared to a standard online quiz?"
-                ), 
-                React.createElement("textarea", {
-                    className: "surveyTextArea", 
-                    onChange: this.updateQuestion2})
-            ), 
-             React.createElement("div", null, 
-                React.createElement("div", null, 
-                    "What did you like and dislike about this system?"
-                ), 
-                React.createElement("textarea", {
-                    className: "surveyTextArea", 
-                    onChange: this.updateQuestion3})
-            ), 
-             React.createElement("div", null, 
-                React.createElement("div", null, 
-                    "Any other comments?"
-                ), 
-                React.createElement("textarea", {
-                    className: "surveyTextArea", 
-                    onChange: this.updateQuestion4})
-            ), 
-            React.createElement("input", {type: "button", className: "submitSurvey", value: "Submit", onClick: this.onSubmitForm})
-        )
-    ));
+    // var survey =
+    // (<div>
+    //     <form>
+    //         <div>
+    //             <div>
+    //                 Did you find the explanations from other students to be helpful in understanding the answer?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion1}/>
+    //         </div>
+    //         <div>
+    //             <div>
+    //                 Overall, did you feel that this system could enhance your learning as compared to a standard online quiz?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion2}/>
+    //         </div>
+    //          <div>
+    //             <div>
+    //                 What did you like and dislike about this system?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion3}/>
+    //         </div>
+    //          <div>
+    //             <div>
+    //                 Any other comments?
+    //             </div>
+    //             <textarea
+    //                 className="surveyTextArea"
+    //                 onChange={this.updateQuestion4}/>
+    //         </div>
+    //         <input type='button' className='submitSurvey' value='Submit' onClick={this.onSubmitForm}/>
+    //     </form>
+    // </div>);
 
     if (!dataStore.isControl && !this.state.finishedSurvey) {
         return (
-            React.createElement("div", null, 
-                React.createElement("h1", null, "Quiz complete!"), 
-                React.createElement("div", {className: "surveyExplanation"}, " Please take a minute to answer the following questions: "), 
-                    survey
+            React.createElement("div", {className: "googleForm"}, 
+                React.createElement("iframe", {src: "https://docs.google.com/forms/d/1jGaI__9Z2HpLsvpb_jMxo6gcknl8mkRmLIyJfxca_50/viewform?embedded=true", width: "100%", height: "100%", frameborder: "0", marginheight: "0", marginwidth: "0"}, "Loading...")
             )
         );
     }

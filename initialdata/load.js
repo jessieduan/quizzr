@@ -49,7 +49,7 @@ db.quizzes.insert([
         },
         "2": {
             "question_str": "A home security system frequently goes off, even though most of the time there is no security issue. However, every time there has been an intruder, the system has alerted the homeowner. This system has:",
-            "correct_answer_id": 4,
+            "correct_answer_id": 3,
             "control_explanation": "Precision is the percentage of positive predictions that are correct, while recall is the percentage of positive cases that we caught.",
             "answers": {
                 "1": {
@@ -368,7 +368,7 @@ db.quizzes.insert([
                     }]
                 },
                 "4": {
-                    "answer": "There is a <6% chance that, given a t-value of 1.87, a team that put in more effort than average would consist of beginners",
+                    "answer": "Given that teams with beginners put forth no more effort than teams without beginners, there is a <6% chance that we would’ve seen these results.",
                     "explanations": [{
                         "explanation_id": 1,
                         "explanation": "The p-value measures the probability that we would see our data, given that the null hypothesis is true. Here, our null hypothesis is that teams with beginners put forth as much or less effort as teams without beginners.",
@@ -383,7 +383,7 @@ db.quizzes.insert([
             "control_explanation": "We have 2 means, so we have 5-2=3 degrees of freedom.",
             "answers": {
                 "1": {
-                    "answer": "There is a <.1% chance that, given an F-value of 23.96, the perceived visual complexity of websites is not a strong predictor of appeal",
+                    "answer": "2",
                     "explanations": [
                     {
                         "explanation_id": 1,
@@ -392,7 +392,7 @@ db.quizzes.insert([
                     }]
                 },
                 "2": {
-                    "answer": "There is a <.1% chance that, given that perceived visual complexity of websites is not a strong predictor of appeal, we would’ve seen these results",
+                    "answer": "3",
                     "explanations": [{
                         "explanation_id": 1,
                         "explanation": "We have 2 means, so we have 5-2=3 degrees of freedom.",
@@ -400,7 +400,7 @@ db.quizzes.insert([
                     }]
                 },
                 "3": {
-                    "answer": "The F-value of 23.96 is higher than .1% of all F-values",
+                    "answer": "4",
                     "explanations": [{
                         "explanation_id": 1,
                         "explanation": "We have N-2 degrees of freedom, so this is 3, not 4",
@@ -408,7 +408,7 @@ db.quizzes.insert([
                     }]
                 },
                 "4": {
-                    "answer": "<.1% of users did not perceive visual complexity of websites as a strong predictor of appeal",
+                    "answer": "5",
                     "explanations": [{
                         "explanation_id": 1,
                         "explanation": "You forgot to subtract 2 (we have N-2 degrees of freedom)",

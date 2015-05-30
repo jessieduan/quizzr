@@ -17,6 +17,11 @@ a {
   color: #00B7FF;
 }
 
+.googleForm {
+  width:600px;
+  height:1350px;
+}
+
 .surveyTextArea {
   width: 570px;
   height:60px;
