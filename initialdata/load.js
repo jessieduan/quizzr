@@ -88,56 +88,6 @@ db.quizzes.insert([
             }
         },
         "3": {
-            "question_str": "You ran a study examining how much males vs females like a particular website. What test would you use to determine whether males and females like the website equally?",
-            "correct_answer_id": 2,
-            "control_explanation": "An unpaired t-test is used to compare two independent groups.",
-            "answers": {
-                "1": {
-                    "answer": "Chi-square test",
-                    "explanations": [
-                    {
-                        "explanation_id": 1,
-                        "explanation": "A chi-square test looks at how far a statistic is from the mean.",
-                        "upvotes": 1
-                    },
-                    {
-                        "explanation_id": 2,
-                        "explanation": "Chi-squared tests examine how far a value is from 'expected', but can't compare multiple values.",
-                        "upvotes": 2
-                    }]
-                },
-                "2": {
-                    "answer": "Unpaired t-test (student’s t-test)",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "This is correct because we are examining two independent groups, males vs females.",
-                        "upvotes": 1
-                    },
-                    {
-                        "explanation_id": 2,
-                        "explanation": "An unpaired t-test is used to compare two independent groups.",
-                        "upvotes": 0
-                    }]
-                },
-                "3": {
-                    "answer": "Paired t-test",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "A paired t-test is used to compare results from one group measured at two time points, but this study is examining two independent groups.",
-                        "upvotes": 1
-                    }]
-                },
-                "4": {
-                    "answer": "ANOVA",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "ANOVA could probably be used here, but we had to choose the first test listed that would work, which is the unpaired t-test.",
-                        "upvotes": 0
-                    }]
-                }
-            }
-        },
-        "4": {
             "question_str": "A paper says “Our results show that the perceived visual complexity of websites is a strong predictor of appeal (F(1) = 23.96, p < .001)”. Which of the following is true?",
             "correct_answer_id": 2,
             "control_explanation": "The p-value measures the probability that we would see our data, given that the null hypothesis is true. Here, our null hypothesis is that perceived visual complexity is not a strong predictor of appeal.",
@@ -177,7 +127,7 @@ db.quizzes.insert([
                 }
             }
         },
-        "5": {
+        "4": {
             "question_str": "We are conducting a statistical test comparing 3 means across 42 numbers. How many degrees of freedom will our test have?",
             "correct_answer_id": 4,
             "control_explanation": "We have 3 means, so we have 42-3=39 degrees of freedom.",
@@ -217,7 +167,7 @@ db.quizzes.insert([
                 }
             }
         },
-        "6": {
+        "5": {
             "question_str": "Which of the following would lead to a less significant result in a t-test comparing the means of two groups?",
             "correct_answer_id": 3,
             "control_explanation": "A t-test measures whether two groups have the same mean. Fewer samples means that we have less information, so we can’t be as confident in our results, and therefore our results are less significant.",
@@ -257,7 +207,7 @@ db.quizzes.insert([
                 }
             }
         },
-        "7": {
+        "6": {
             "question_str": "Every time you upload pictures to Facebook, Facebook identifies your friends in the photos and asks if you’d like to tag them. Facebook never identifies friends incorrectly, but doesn’t identify every friend. This photo tagging feature has:",
             "correct_answer_id": 2,
             "control_explanation": "Precision is the percentage of positive predictions that are correct, while recall is the percentage of positive cases that we caught.",
@@ -297,47 +247,7 @@ db.quizzes.insert([
                 }
             }
         },
-        "8": {
-            "question_str": "Google is considering changing its signature color. They ran a study to see which color would lead users to make the most searches, by assigning each user to either bright yellow, bright green, or the old color, and then giving each user his/her assigned color when visiting www.google.com. They then compared the average number of searches per user among those groups. What test would you use to decide which color leads to the most searches per user? (choose the first test listed if multiple apply)",
-            "correct_answer_id": 4,
-            "control_explanation": " ANOVA is used to compare >2 groups, and here we’re comparing 3 groups.",
-            "answers": {
-                "1": {
-                    "answer": "Chi-square test",
-                    "explanations": [
-                    {
-                        "explanation_id": 1,
-                        "explanation": 'A chi-square test looks at how far a statistic is from the mean.',
-                        "upvotes": 2
-                    }]
-                },
-                "2": {
-                    "answer": "Unpaired t-test (student’s t-test)",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "An unpaired t-test is used to compare two independent groups.",
-                        "upvotes": 4
-                    }]
-                },
-                "3": {
-                    "answer": "Paired t-test",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "A paired t-test is used to compare results from one group measured at two time points.",
-                        "upvotes": 2
-                    }]
-                },
-                "4": {
-                    "answer": "ANOVA",
-                    "explanations": [{
-                        "explanation_id": 1,
-                        "explanation": "ANOVA could probably be used here, but we had to choose the first test listed ANOVA is used to compare >2 groups, and here we’re comparing 3 groups.",
-                        "upvotes": 4
-                    }]
-                }
-            }
-        },
-        "9": {
+        "7": {
             "question_str": "A study says “Our results show that teams with beginners tend to put forth more effort (t = 1.87, p < .06)”. Which of the following is true?",
             "correct_answer_id": 4,
             "control_explanation": "The p-value measures the probability that we would see our data, given that the null hypothesis is true. Here, our null hypothesis is that teams with beginners put forth as much or less effort as teams without beginners.",
@@ -377,7 +287,7 @@ db.quizzes.insert([
                 }
             }
         },
-        "10": {
+        "8": {
             "question_str": "We are conducting a statistical test comparing 2 means across 5 numbers. How many degrees of freedom will our test have?",
             "correct_answer_id": 2,
             "control_explanation": "We have 2 means, so we have 5-2=3 degrees of freedom.",
@@ -452,30 +362,6 @@ db.users.insert([
         },
         "2": {
             "time_started": date3,
-            "attempts": []
-        }
-    }
-},
-{
-    "user_id": 2,
-    "name": "Maggie Skortcheva",
-    "email": "magsko@stanford.edu",
-    "is_control": true,
-    "quizzes_taken": {
-        "1": {
-            "time_started": date2,
-            "attempts": []
-        }
-    }
-},
-{
-    "user_id": 3,
-    "name": "Jessie Duan",
-    "email": "jduan1@stanford.edu",
-    "is_control": false,
-    "quizzes_taken": {
-        "1": {
-            "time_started": date2,
             "attempts": []
         }
     }
