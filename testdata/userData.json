@@ -1,0 +1,1582 @@
+{
+	"_id" : ObjectId("556a38d0237d5ab379f57347"),
+	"name" : "hi",
+	"email" : "test",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024720753,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a38d3237d5ab379f57348"),
+	"name" : "hi",
+	"email" : "test",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024723576,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a38dcfcb116c4277a9131"),
+	"user_id" : 1,
+	"name" : "Melissa Johnson",
+	"email" : "melj@stanford.edu",
+	"is_control" : false,
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : ISODate("2015-06-05T00:00:00Z"),
+			"attempts" : [
+				{
+					"question_id" : 1,
+					"is_correct" : false,
+					"answer_given" : 2,
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ],
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : 2,
+					"is_correct" : true,
+					"answer_given" : 1,
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ],
+					"wrote_explanation" : 2
+				}
+			]
+		},
+		"2" : {
+			"time_started" : ISODate("2015-06-07T00:00:00Z"),
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a38eafd080dc579675804"),
+	"name" : "hi",
+	"email" : "you",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024746404,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a395afd080dc579675805"),
+	"name" : "test",
+	"email" : "test2",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024858604,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a396efd080dc579675806"),
+	"name" : "elaine",
+	"email" : "ezhou@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024878937,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a3996fd080dc579675807"),
+	"name" : "Chris",
+	"email" : "boo@foo.com",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433024918376,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a39f7fd080dc579675808"),
+	"name" : "e",
+	"email" : "e@e.com",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433025015740,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						2
+					],
+					"downvoted_explanations" : [
+						2
+					],
+					"explanation_written" : "low precision = low accuracy of accurately alerting a security issue\nhigh recall = actually did go off when intrusion did happen",
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ],
+					"explanation_written" : "The p value deals with the probability of the results not happening because of random chance.",
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ],
+					"explanation_written" : "I thought it said never identifies friends \"correctly,\" so I thought low precision and low recall",
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a491afd080dc57967580d"),
+	"name" : "hi",
+	"email" : "you",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433028890401,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a49aefd080dc57967580e"),
+	"name" : "test",
+	"email" : "ing",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433029038393,
+			"attempts" : [ ]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a4a5cfd080dc57967580f"),
+	"name" : "Vinamrata Singal",
+	"email" : "vsingal5@stanford.edu",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433029212629,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556b4b14fd080dc579675815"),
+	"name" : "Ji Park",
+	"email" : "jipark21@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433094932101,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a3b8afd080dc579675809"),
+	"name" : "David Jiang",
+	"email" : "dnjiang@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433025418796,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [
+						1
+					],
+					"explanation_written" : "A t-test produces a p-value, which is the probability that we would obtain our sampling data if the results were random. A low p-value tells us that our probability of obtaining the results we observed by chance is highly likely and probably represents a significant difference between two groups.",
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a4119fd080dc57967580a"),
+	"name" : "Weston",
+	"email" : "wag@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433026841569,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ],
+					"explanation_written" : "The p-value doesn't make a claim on whether the hypothesis is true or not, they simply indicate whether the results are likely to have happened by chance. ",
+					"wrote_explanation" : 2
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						2
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a47affd080dc57967580b"),
+	"name" : "Julie",
+	"email" : "julienam@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433028527414,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a48aefd080dc57967580c"),
+	"name" : "Makiko",
+	"email" : "makikof@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433028782889,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a4ca1fd080dc579675810"),
+	"name" : "Brian Yang",
+	"email" : "blyang@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433029793739,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						2
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a4d87fd080dc579675811"),
+	"name" : "Jessica Kung",
+	"email" : "jzkung@stanford.edu",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433030023663,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a59d1fd080dc579675812"),
+	"name" : "Ishita Prasad",
+	"email" : "ishitap@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433033169868,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						2
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						2
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a6718fd080dc579675813"),
+	"name" : "John YS",
+	"email" : "johnys@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433036568439,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ],
+					"explanation_written" : "---",
+					"wrote_explanation" : 2
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556a8f5cfd080dc579675814"),
+	"name" : "Anna Yelizarova",
+	"email" : "hannay@stanford.edu",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433046876501,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556b548bfd080dc579675816"),
+	"name" : "Zaza",
+	"email" : "zaza.kabayadondo@gmail.com",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433097355038,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1,
+						2
+					],
+					"downvoted_explanations" : [ ],
+					"explanation_written" : "Lower variance in each group would lead to more significant values",
+					"wrote_explanation" : 2
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556b98befd080dc579675817"),
+	"name" : "Page",
+	"email" : "pageive@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433114814731,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [
+						1
+					]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [
+						1
+					]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [
+						1
+					]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : false,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556c13c1fd080dc579675818"),
+	"name" : "Sherman Leung",
+	"email" : "skleung@stanford.edu",
+	"is_control" : "true",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433146305864,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : false,
+					"answer_given" : "1",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [ ],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556cb04ffd080dc579675819"),
+	"name" : "Aaron Brown",
+	"email" : "abrown94@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433186383999,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "6",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "7",
+					"is_correct" : true,
+					"answer_given" : "4",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "8",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "3",
+					"is_correct" : true,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "4",
+					"is_correct" : false,
+					"answer_given" : "2",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "5",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
+{
+	"_id" : ObjectId("556d153bfd080dc57967581a"),
+	"name" : "Fran Guo",
+	"email" : "franguo@stanford.edu",
+	"is_control" : "false",
+	"quizzes_taken" : {
+		"1" : {
+			"time_started" : 1433212219512,
+			"attempts" : [
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "1",
+					"is_correct" : true,
+					"answer_given" : "1",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				},
+				{
+					"question_id" : "2",
+					"is_correct" : true,
+					"answer_given" : "3",
+					"upvoted_explanations" : [
+						1
+					],
+					"downvoted_explanations" : [ ]
+				}
+			]
+		}
+	}
+}
